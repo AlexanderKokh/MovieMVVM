@@ -3,7 +3,7 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class MovieViewController: UIViewController {
     // MARK: - Visual Components
 
     private enum Constants {
@@ -18,20 +18,45 @@ final class ViewController: UIViewController {
         static let cellID = "MovieCell"
     }
 
-    private var tableView: UITableView!
-    var viewData: ViewData = .initial
-    var viewModel: MainScreenViewModelProtocol!
-
     // MARK: - Private Properties
 
-    private var movies: [Movie] = []
+    private var tableView: UITableView!
+    private var activityIndicator: UIActivityIndicatorView!
+    private var props: ViewData = .loading {
+        didSet {
+            view.setNeedsLayout()
+        }
+    }
+
+    private var viewModel: MainScreenViewModelProtocol!
+
+    convenience init(viewModel: MainScreenViewModelProtocol) {
+        self.init()
+        self.viewModel = viewModel
+    }
 
     // MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = MainScreenViewModel()
         setupView()
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        switch props {
+        case .loading:
+            activityIndicator.startAnimating()
+            tableView.isHidden = true
+        case .loaded:
+            activityIndicator.stopAnimating()
+            tableView.isHidden = false
+            tableView.reloadData()
+        case let .failure(description, _):
+            activityIndicator.stopAnimating()
+            showAlert(title: "Ошибка загрузки", message: description)
+        }
     }
 
     // MARK: - IBAction
@@ -47,8 +72,16 @@ final class ViewController: UIViewController {
         view.backgroundColor = .black
         createFilmButtons()
         createTableView()
+        createIndicator()
         updateView()
-        getData(groupId: 0)
+    }
+
+    private func createIndicator() {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .lightGray
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        activityIndicator.center = view.center
     }
 
     private func createFilmButtons() {
@@ -124,20 +157,17 @@ final class ViewController: UIViewController {
         }
     }
 
+    private func tableViewAnimate(_ cell: UITableViewCell) {
+        cell.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        UIView.animate(withDuration: 0.4) {
+            cell.transform = CGAffineTransform.identity
+        }
+    }
+
     private func updateView() {
         viewModel.updateViewData = { [weak self] viewData in
             DispatchQueue.main.async {
-                self?.viewData = viewData
-                switch viewData {
-                case .initial:
-                    self?.movies = []
-                case let .success(data):
-                    self?.movies = data
-                case let .failure(error):
-                    self?.movies = []
-                    print(error)
-                }
-                self?.tableView.reloadData()
+                self?.props = viewData
             }
         }
     }
@@ -149,41 +179,45 @@ final class ViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 
-extension ViewController: UITableViewDelegate {
+extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = MovieDetailViewController()
-        let titleLabel = Constants.backBarTitle
-        vc.title = movies[indexPath.row].title
-        MovieDetailViewController.id = movies[indexPath.row].id ?? 1
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: titleLabel, style: .plain, target: nil, action: nil
-        )
-        navigationController?.pushViewController(vc, animated: true)
+        if case let .loaded(data) = props {
+            let vc = MovieDetailViewController()
+            let titleLabel = Constants.backBarTitle
+            vc.title = data[indexPath.row].title
+            MovieDetailViewController.id = data[indexPath.row].id ?? 1
+            navigationItem.backBarButtonItem = UIBarButtonItem(
+                title: titleLabel, style: .plain, target: nil, action: nil
+            )
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-        UIView.animate(withDuration: 0.4) {
-            cell.transform = CGAffineTransform.identity
-        }
+        tableViewAnimate(cell)
     }
 }
 
 // MARK: - UITableViewDataSource
 
-extension ViewController: UITableViewDataSource {
+extension MovieViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movies.count
+        if case let .loaded(data) = props {
+            return data.count
+        }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(
-            withIdentifier: Constants.cellID,
-            for: indexPath
-        ) as? MovieTableViewCell {
-            cell.configureCell(movie: movies[indexPath.row])
-            cell.backgroundColor = .black
-            return cell
+        if case let .loaded(data) = props {
+            if let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.cellID,
+                for: indexPath
+            ) as? MovieTableViewCell {
+                cell.configureCell(movie: data[indexPath.row])
+                cell.backgroundColor = .black
+                return cell
+            }
         }
         return UITableViewCell()
     }

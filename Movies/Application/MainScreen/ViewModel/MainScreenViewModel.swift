@@ -9,16 +9,16 @@ protocol MainScreenViewModelProtocol {
 }
 
 final class MainScreenViewModel: MainScreenViewModelProtocol {
-    public var updateViewData: ((ViewData) -> ())?
+    var updateViewData: ((ViewData) -> ())?
 
     init() {
-        updateViewData?(.initial)
+        updateViewData?(.loading)
     }
 
     public func getData(groupId: Int) {
         let url = getURL(groupId: groupId)
         NetWorkManager.fetchData(url: url) { [weak self] movies in
-            self?.updateViewData?(.success(movies))
+            self?.updateViewData?(.loaded(movies))
         }
     }
 
