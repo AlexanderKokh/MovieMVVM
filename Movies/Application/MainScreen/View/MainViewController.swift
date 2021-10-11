@@ -1,55 +1,44 @@
-// ViewController.swift
+// MainViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
-/// Настройки кнопок
-enum ButtonSettings: String {
-    case buttonBackground
-    case buttonShadow
-    case buttonBorder
-}
-
 final class ViewController: UIViewController {
     // MARK: - Visual Components
 
+    private enum Constants {
+        static let backgroundColorName = "buttonBackground"
+        static let shadowColorName = "buttonShadow"
+        static let borderColorName = "buttonBorder"
+        static let popularButtonTitle = "Популярные"
+        static let comingSoonButtonTitle = "В прокате"
+        static let topRateButtonTitle = "Топ рейтинга"
+        static let backBarTitle = "К списку"
+        static let fontName = "Marker Felt Thin"
+        static let cellID = "MovieCell"
+    }
+
     private var tableView: UITableView!
+    var viewData: ViewData = .initial
+    var viewModel: MainScreenViewModelProtocol!
 
     // MARK: - Private Properties
 
-    private let cellID = "MovieCell"
     private var movies: [Movie] = []
 
     // MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = MainScreenViewModel()
         setupView()
     }
 
     // MARK: - IBAction
 
     @objc private func showMovieList(selector: UIButton) {
-        UIView.animate(withDuration: 0.2) {
-            selector.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        } completion: { _ in
-            UIView.animate(withDuration: 0.2) {
-                selector.transform = CGAffineTransform.identity
-            }
-        }
-
-        var url = ""
-        switch selector.tag {
-        case 0:
-            url = NetWorkManager.getMovieURl(urlMovieType: .topRate)
-        case 1:
-            url = NetWorkManager.getMovieURl(urlMovieType: .popular)
-        case 2:
-            url = NetWorkManager.getMovieURl(urlMovieType: .nowPlauing)
-        default:
-            url = NetWorkManager.getMovieURl(urlMovieType: .topRate)
-        }
-        fetchData(url: url)
+        buttonTransformAnimate(selector)
+        getData(groupId: selector.tag)
     }
 
     // MARK: - Private Methods
@@ -58,21 +47,12 @@ final class ViewController: UIViewController {
         view.backgroundColor = .black
         createFilmButtons()
         createTableView()
-        let url = NetWorkManager.getMovieURl(urlMovieType: .topRate)
-        fetchData(url: url)
-    }
-
-    private func fetchData(url: String) {
-        NetWorkManager.fetchData(url: url) { [weak self] movies in
-            self?.movies = movies
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
+        updateView()
+        getData(groupId: 0)
     }
 
     private func createFilmButtons() {
-        let popularButton = configureRequestButton(title: "Популярные")
+        let popularButton = configureRequestButton(title: Constants.popularButtonTitle)
         popularButton.tag = 1
         view.addSubview(popularButton)
         popularButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -81,7 +61,7 @@ final class ViewController: UIViewController {
         popularButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         popularButton.addTarget(self, action: #selector(showMovieList), for: .touchUpInside)
 
-        let comingSoonButton = configureRequestButton(title: "В прокате")
+        let comingSoonButton = configureRequestButton(title: Constants.comingSoonButtonTitle)
         comingSoonButton.tag = 2
         view.addSubview(comingSoonButton)
         comingSoonButton.trailingAnchor.constraint(equalTo: popularButton.leadingAnchor, constant: -30).isActive = true
@@ -90,7 +70,7 @@ final class ViewController: UIViewController {
         comingSoonButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         comingSoonButton.addTarget(self, action: #selector(showMovieList), for: .touchUpInside)
 
-        let topRateButton = configureRequestButton(title: "Топ рейтинга")
+        let topRateButton = configureRequestButton(title: Constants.topRateButtonTitle)
         topRateButton.tag = 0
         view.addSubview(topRateButton)
         topRateButton.leadingAnchor.constraint(equalTo: popularButton.trailingAnchor, constant: 30).isActive = true
@@ -105,7 +85,7 @@ final class ViewController: UIViewController {
         let displayHeight: CGFloat = view.frame.height
 
         tableView = UITableView(frame: CGRect(x: 0, y: 100, width: displayWidth, height: displayHeight))
-        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.cellID)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.estimatedRowHeight = 200.0
@@ -117,21 +97,53 @@ final class ViewController: UIViewController {
     private func configureRequestButton(title: String) -> UIButton {
         let buttonTopRate: UIButton = {
             let button = UIButton()
-            let fontName = "Marker Felt Thin"
+            let fontName = Constants.fontName
             button.setTitle(title, for: .normal)
-            button.backgroundColor = UIColor(named: ButtonSettings.buttonBackground.rawValue)
+            button.backgroundColor = UIColor(named: Constants.backgroundColorName)
             button.layer.cornerRadius = 10
-            button.layer.shadowColor = UIColor(named: ButtonSettings.buttonShadow.rawValue)?.cgColor
+            button.layer.shadowColor = UIColor(named: Constants.shadowColorName)?.cgColor
             button.layer.shadowOpacity = 0.7
             button.layer.shadowOffset = CGSize(width: 2, height: 2)
             button.layer.borderWidth = 2
-            button.layer.borderColor = UIColor(named: ButtonSettings.buttonBorder.rawValue)?.cgColor
+            button.layer.borderColor = UIColor(named: Constants.borderColorName)?.cgColor
             button.translatesAutoresizingMaskIntoConstraints = false
             button.titleLabel?.font = UIFont(name: fontName, size: 16)
             button.setTitleColor(.black, for: .normal)
             return button
         }()
         return buttonTopRate
+    }
+
+    private func buttonTransformAnimate(_ selector: UIButton) {
+        UIView.animate(withDuration: 0.2) {
+            selector.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.2) {
+                selector.transform = CGAffineTransform.identity
+            }
+        }
+    }
+
+    private func updateView() {
+        viewModel.updateViewData = { [weak self] viewData in
+            DispatchQueue.main.async {
+                self?.viewData = viewData
+                switch viewData {
+                case .initial:
+                    self?.movies = []
+                case let .success(data):
+                    self?.movies = data
+                case let .failure(error):
+                    self?.movies = []
+                    print(error)
+                }
+                self?.tableView.reloadData()
+            }
+        }
+    }
+
+    private func getData(groupId: Int) {
+        viewModel.getData(groupId: groupId)
     }
 }
 
@@ -140,7 +152,7 @@ final class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MovieDetailViewController()
-        let titleLabel = "К списку"
+        let titleLabel = Constants.backBarTitle
         vc.title = movies[indexPath.row].title
         MovieDetailViewController.id = movies[indexPath.row].id ?? 1
         navigationItem.backBarButtonItem = UIBarButtonItem(
@@ -165,7 +177,10 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? MovieTableViewCell {
+        if let cell = tableView.dequeueReusableCell(
+            withIdentifier: Constants.cellID,
+            for: indexPath
+        ) as? MovieTableViewCell {
             cell.configureCell(movie: movies[indexPath.row])
             cell.backgroundColor = .black
             return cell
