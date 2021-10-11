@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ViewData
+/// UI Data Driven
 enum ViewData {
     case loading
     case loaded([Movie])

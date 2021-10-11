@@ -4,7 +4,7 @@
 import UIKit
 
 final class MovieViewController: UIViewController {
-    // MARK: - Visual Components
+    // MARK: - Private Properties
 
     private enum Constants {
         static let backgroundColorName = "buttonBackground"
@@ -16,11 +16,11 @@ final class MovieViewController: UIViewController {
         static let backBarTitle = "К списку"
         static let fontName = "Marker Felt Thin"
         static let cellID = "MovieCell"
+        static let downloadError = "Ошибка загрузки"
     }
 
-    // MARK: - Private Properties
-
     private var tableView: UITableView!
+    private var viewModel: MainScreenViewModelProtocol!
     private var activityIndicator: UIActivityIndicatorView!
     private var props: ViewData = .loading {
         didSet {
@@ -28,7 +28,7 @@ final class MovieViewController: UIViewController {
         }
     }
 
-    private var viewModel: MainScreenViewModelProtocol!
+    // MARK: - Initializers
 
     convenience init(viewModel: MainScreenViewModelProtocol) {
         self.init()
@@ -55,7 +55,7 @@ final class MovieViewController: UIViewController {
             tableView.reloadData()
         case let .failure(description, _):
             activityIndicator.stopAnimating()
-            showAlert(title: "Ошибка загрузки", message: description)
+            showAlert(title: Constants.downloadError, message: description)
         }
     }
 
@@ -186,8 +186,12 @@ extension MovieViewController: UITableViewDelegate {
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
             MovieDetailViewController.id = data[indexPath.row].id ?? 1
+
             navigationItem.backBarButtonItem = UIBarButtonItem(
-                title: titleLabel, style: .plain, target: nil, action: nil
+                title: titleLabel,
+                style: .plain,
+                target: nil,
+                action: nil
             )
             navigationController?.pushViewController(vc, animated: true)
         }

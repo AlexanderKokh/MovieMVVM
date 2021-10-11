@@ -9,18 +9,26 @@ protocol MainScreenViewModelProtocol {
 }
 
 final class MainScreenViewModel: MainScreenViewModelProtocol {
+    // MARK: - Public Properties
+
     var updateViewData: ((ViewData) -> ())?
+
+    // MARK: - Initializers
 
     init() {
         updateViewData?(.loading)
     }
 
-    public func getData(groupId: Int) {
+    // MARK: - Public methods
+
+    func getData(groupId: Int) {
         let url = getURL(groupId: groupId)
         NetWorkManager.fetchData(url: url) { [weak self] movies in
             self?.updateViewData?(.loaded(movies))
         }
     }
+
+    // MARK: - Private methods
 
     private func getURL(groupId: Int) -> String {
         let url: String?
