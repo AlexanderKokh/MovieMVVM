@@ -14,13 +14,14 @@ enum DownLoaderError: Error {
     case jsonSerializationError(Error)
 }
 
-typealias HandlerMovie = (Result<[Movie], ImageLoadingError>) -> ()
+typealias HandlerMovie = (Result<[Movie], DownLoaderError>) -> ()
 typealias HandlerMovieDetail = (Result<MovieDetail, DownLoaderError>) -> ()
+typealias HandlerCast = (Result<[Cast], DownLoaderError>) -> ()
 
 protocol MovieAPIServiceProtocol {
-    func fetchData(groupID: Int, compleation: @escaping (_ movies: [Movie]) -> ())
     func fetchDataDetail(filmID: Int, compleation: @escaping (HandlerMovieDetail))
-    func fetchCastData(filmID: Int, compleation: @escaping (_ cast: [Cast]) -> ())
+    func fetchData(groupID: Int, compleation: @escaping (HandlerMovie))
+    func fetchCastData(filmID: Int, compleation: @escaping (HandlerCast))
 }
 
 final class MovieAPIService: MovieAPIServiceProtocol {
@@ -28,7 +29,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
 
     // MARK: - Public methods
 
-    func fetchData(groupID: Int, compleation: @escaping (_ movies: [Movie]) -> ()) {
+    func fetchData(groupID: Int, compleation: @escaping (HandlerMovie)) {
         let movieURL = getURL(groupId: groupID)
         guard let url = URL(string: movieURL) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -38,9 +39,9 @@ final class MovieAPIService: MovieAPIServiceProtocol {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let incomingJson = try decoder.decode(IncomingJson.self, from: data)
                 let movies = incomingJson.results
-                compleation(movies)
+                compleation(.success(movies))
             } catch {
-                print(self.errorSerialiaztion, error)
+                compleation(.failure(.jsonSerializationError(error)))
             }
         }.resume()
     }
@@ -63,7 +64,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
         }.resume()
     }
 
-    func fetchCastData(filmID: Int, compleation: @escaping (_ cast: [Cast]) -> ()) {
+    func fetchCastData(filmID: Int, compleation: @escaping (HandlerCast)) {
         let movieURL = getMovieURl(urlMovieType: .cast, id: filmID)
 
         guard let url = URL(string: movieURL) else { return }
@@ -76,10 +77,10 @@ final class MovieAPIService: MovieAPIServiceProtocol {
                 let decodeData = try decoder.decode(CastList.self, from: data)
                 let cast = decodeData.cast
                 DispatchQueue.main.async {
-                    compleation(cast)
+                    compleation(.success(cast))
                 }
             } catch {
-                print(self.errorSerialiaztion, error)
+                compleation(.failure(.jsonSerializationError(error)))
             }
         }.resume()
     }

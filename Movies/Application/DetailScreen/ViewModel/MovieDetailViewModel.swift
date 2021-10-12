@@ -7,14 +7,14 @@ typealias VoidHandler = (() -> ())
 
 protocol MovieDetailViewModelProtocol {
     var movieDetail: MovieDetail? { get set }
-    var updateViewData: ((MovieDetail) -> ())? { get set }
+    var updateViewData: (() -> ())? { get set }
     var showError: VoidHandler? { get set }
     var error: String? { get set }
     func getData(filmID: Int)
 }
 
 final class MovieDetailViewModel: MovieDetailViewModelProtocol {
-    var updateViewData: ((MovieDetail) -> ())?
+    var updateViewData: (() -> ())?
     var showError: VoidHandler?
     var movieDetail: MovieDetail?
     var error: String?
@@ -34,7 +34,7 @@ final class MovieDetailViewModel: MovieDetailViewModelProtocol {
             switch result {
             case let .success(movieDetail):
                 self?.movieDetail = movieDetail
-                self?.updateViewData?(movieDetail)
+                self?.updateViewData?()
             case let .failure(.jsonSerializationError(error)):
                 self?.showError?()
                 self?.error = error.localizedDescription

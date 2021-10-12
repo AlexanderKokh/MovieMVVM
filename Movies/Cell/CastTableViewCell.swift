@@ -7,6 +7,7 @@ final class CastTableViewCell: UITableViewCell {
     // MARK: - Visual Components
 
     private var collectionView: UICollectionView!
+    private var id: Int?
 
     private let backGroundView: UIView = {
         let view = UIView()
@@ -24,7 +25,7 @@ final class CastTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCell()
+        // setupCell(FilmID: Int)
     }
 
     @available(*, unavailable)
@@ -34,9 +35,10 @@ final class CastTableViewCell: UITableViewCell {
 
     // MARK: - Private Methods
 
-    private func setupCell() {
+    func setupCell(filmID: Int) {
+        id = filmID
         createCollectionView()
-        fetchDetailData()
+        fetchDetailData(filmID: id ?? 0)
     }
 
     private func createCollectionView() {
@@ -77,11 +79,16 @@ final class CastTableViewCell: UITableViewCell {
         )
     }
 
-    private func fetchDetailData() {
-        movieAPIService.fetchCastData(filmID: MovieDetailViewController.id) { [weak self] cast in
-            self?.cast = cast
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
+    private func fetchDetailData(filmID: Int) {
+        movieAPIService.fetchCastData(filmID: filmID) { [weak self] result in
+            switch result {
+            case let .failure(.jsonSerializationError(error)):
+                print(error.localizedDescription)
+            case let .success(cast):
+                self?.cast = cast
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             }
         }
     }

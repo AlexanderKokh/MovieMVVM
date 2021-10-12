@@ -19,7 +19,7 @@ final class MovieDetailViewController: UIViewController {
 
     // MARK: - Public Properties
 
-    static var id = Int()
+    var id = Int()
 
     // MARK: - Private Properties
 
@@ -55,7 +55,7 @@ final class MovieDetailViewController: UIViewController {
 
     @objc private func showWebView() {
         let vc = WebViewController()
-        vc.imdbID = String(MovieDetailViewController.id)
+        vc.imdbID = String(id)
         present(vc, animated: true)
     }
 
@@ -65,7 +65,7 @@ final class MovieDetailViewController: UIViewController {
         view.backgroundColor = .black
         createTableView()
         updateView()
-        getData(filmID: MovieDetailViewController.id)
+        getData(filmID: id)
     }
 
     private func createTableView() {
@@ -92,7 +92,7 @@ final class MovieDetailViewController: UIViewController {
 
     private func updateView() {
         getDownloadError()
-        viewModel?.updateViewData = { [weak self] _ in
+        viewModel?.updateViewData = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableview.reloadData()
             }
@@ -149,6 +149,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                 withIdentifier: "CastCell",
                 for: indexPath
             ) as? CastTableViewCell {
+                cell.setupCell(filmID: id)
                 cell.selectionStyle = .none
                 cell.backgroundColor = .black
                 return cell

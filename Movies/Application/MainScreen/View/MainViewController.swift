@@ -32,7 +32,7 @@ final class MovieViewController: UIViewController {
                 activityIndicator?.stopAnimating()
                 tableView?.isHidden = false
                 tableView?.reloadData()
-            case let .failure(description, _):
+            case let .failure(description):
                 activityIndicator?.stopAnimating()
                 showAlert(title: Constants.downloadError, message: description)
             }
@@ -182,7 +182,7 @@ extension MovieViewController: UITableViewDelegate {
             let vc = MovieDetailViewController(viewModel: viewModel)
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
-            MovieDetailViewController.id = data[indexPath.row].id ?? 1
+            vc.id = data[indexPath.row].id ?? 1
 
             self.navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: titleLabel,
