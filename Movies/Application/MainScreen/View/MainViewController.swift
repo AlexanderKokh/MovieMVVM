@@ -24,7 +24,18 @@ final class MovieViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView?
     private var props: ViewData = .loading {
         didSet {
-            view.setNeedsLayout()
+            switch props {
+            case .loading:
+                activityIndicator?.startAnimating()
+                tableView?.isHidden = true
+            case .loaded:
+                activityIndicator?.stopAnimating()
+                tableView?.isHidden = false
+                tableView?.reloadData()
+            case let .failure(description, _):
+                activityIndicator?.stopAnimating()
+                showAlert(title: Constants.downloadError, message: description)
+            }
         }
     }
 
@@ -42,23 +53,6 @@ final class MovieViewController: UIViewController {
         setupView()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        switch props {
-        case .loading:
-            activityIndicator?.startAnimating()
-            tableView?.isHidden = true
-        case .loaded:
-            activityIndicator?.stopAnimating()
-            tableView?.isHidden = false
-            tableView?.reloadData()
-        case let .failure(description, _):
-            activityIndicator?.stopAnimating()
-            showAlert(title: Constants.downloadError, message: description)
-        }
-    }
-
     // MARK: - IBAction
 
     @objc private func showMovieList(selector: UIButton) {
@@ -73,6 +67,7 @@ final class MovieViewController: UIViewController {
         createFilmButtons()
         createTableView()
         createIndicator()
+        props = ViewData.loading
         updateView()
     }
 
