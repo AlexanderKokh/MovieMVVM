@@ -4,7 +4,7 @@
 import Foundation
 
 protocol MainScreenViewModelProtocol {
-    var updateViewData: ((ViewData) -> ())? { get set }
+    var updateViewData: ((ViewData<Movie>) -> ())? { get set }
     func getData(groupID: Int)
 }
 
@@ -13,7 +13,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
 
     private var movieAPIService: MovieAPIServiceProtocol?
 
-    var updateViewData: ((ViewData) -> ())?
+    var updateViewData: ((ViewData<Movie>) -> ())?
 
     // MARK: - Initializers
 

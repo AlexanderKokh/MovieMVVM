@@ -22,7 +22,7 @@ final class MovieViewController: UIViewController {
     private var tableView: UITableView?
     private var viewModel: MainScreenViewModelProtocol?
     private var activityIndicator: UIActivityIndicatorView?
-    private var props: ViewData = .loading {
+    private var props: ViewData<Movie> = .loading {
         didSet {
             switch props {
             case .loading:
@@ -184,13 +184,13 @@ extension MovieViewController: UITableViewDelegate {
             vc.title = data[indexPath.row].title
             MovieDetailViewController.id = data[indexPath.row].id ?? 1
 
-            navigationItem.backBarButtonItem = UIBarButtonItem(
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: titleLabel,
                 style: .plain,
                 target: nil,
                 action: nil
             )
-            navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 
@@ -217,6 +217,7 @@ extension MovieViewController: UITableViewDataSource {
             ) as? MovieTableViewCell {
                 cell.configureCell(movie: data[indexPath.row])
                 cell.backgroundColor = .black
+                cell.selectionStyle = .none
                 return cell
             }
         }

@@ -5,7 +5,7 @@ import UIKit
 
 typealias HandlerImage = (Result<UIImage, ImageLoadingError>) -> ()
 
-// Ошибка при получении картинки из Даты
+// Ошибки при получении картинки из даты
 enum ImageLoadingError: Error {
     case networkFailure(Error)
     case invalidData

@@ -91,9 +91,21 @@ final class MovieDetailViewController: UIViewController {
     }
 
     private func updateView() {
+        getDownloadError()
         viewModel?.updateViewData = { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableview.reloadData()
+            }
+        }
+    }
+
+    private func getDownloadError() {
+        viewModel?.showError = { [weak self] in
+            DispatchQueue.main.async {
+                self?.showAlert(
+                    title: "Ошибка загрузки",
+                    message: self?.viewModel?.error
+                )
             }
         }
     }

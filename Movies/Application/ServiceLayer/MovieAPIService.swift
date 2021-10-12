@@ -9,14 +9,22 @@ enum URLList: String {
     case cast = "/credits"
 }
 
+///  Виды ошибок при загрузки из интернета
+enum DownLoaderError: Error {
+    case jsonSerializationError(Error)
+}
+
+typealias HandlerMovie = (Result<[Movie], ImageLoadingError>) -> ()
+typealias HandlerMovieDetail = (Result<MovieDetail, DownLoaderError>) -> ()
+
 protocol MovieAPIServiceProtocol {
     func fetchData(groupID: Int, compleation: @escaping (_ movies: [Movie]) -> ())
-    func fetchDataDetail(filmID: Int, compleation: @escaping (_ movieDetail: MovieDetail) -> ())
+    func fetchDataDetail(filmID: Int, compleation: @escaping (HandlerMovieDetail))
     func fetchCastData(filmID: Int, compleation: @escaping (_ cast: [Cast]) -> ())
 }
 
 final class MovieAPIService: MovieAPIServiceProtocol {
-    // MARK: - Public Properties
+    private let errorSerialiaztion = "Error serialization json"
 
     // MARK: - Public methods
 
@@ -32,23 +40,25 @@ final class MovieAPIService: MovieAPIServiceProtocol {
                 let movies = incomingJson.results
                 compleation(movies)
             } catch {
-                print("Error serialization json", error)
+                print(self.errorSerialiaztion, error)
             }
         }.resume()
     }
 
-    func fetchDataDetail(filmID: Int, compleation: @escaping (_ movieDetail: MovieDetail) -> ()) {
+    func fetchDataDetail(filmID: Int, compleation: @escaping HandlerMovieDetail) {
         let movieURL = getMovieURl(urlMovieType: nil, id: filmID, page: nil)
 
         guard let url = URL(string: movieURL) else { return }
+
         URLSession.shared.dataTask(with: url) { data, _, error in
+
             guard let data = data else { return }
             do {
                 let decoder = JSONDecoder()
                 let movieDetail = try decoder.decode(MovieDetail.self, from: data)
-                compleation(movieDetail)
+                compleation(.success(movieDetail))
             } catch {
-                print("Error serialization json", error)
+                compleation(.failure(.jsonSerializationError(error)))
             }
         }.resume()
     }
@@ -69,7 +79,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
                     compleation(cast)
                 }
             } catch {
-                print("Error serialization json", error)
+                print(self.errorSerialiaztion, error)
             }
         }.resume()
     }

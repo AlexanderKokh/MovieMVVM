@@ -1,16 +1,10 @@
-//
-//  UICollectionViewCell + Extension.swift
-//  Movies
-//
-//  Created by Alexander Kokh on 12.10.2021.
-//
+// UICollectionViewCell + Extension.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 extension UICollectionViewCell {
-
     func loadImage(path: String?, imageView: UIImageView?) {
-       ImageLoader.loadImage(path: path, imageView: imageView)
+        ImageLoader.loadImage(path: path, imageView: imageView)
     }
 }
-
