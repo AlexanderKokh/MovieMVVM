@@ -86,7 +86,7 @@ final class MovieTableViewCell: UITableViewCell {
 
         if let poster = movie.posterPath {
             DispatchQueue.global().async {
-                guard let posterURL = URL(string: NetWorkManager.imageURLw500 + poster) else { return }
+                guard let posterURL = URL(string: MovieAPIService.imageURLw500 + poster) else { return }
                 guard let posterData = try? Data(contentsOf: posterURL) else { return }
                 DispatchQueue.main.async {
                     self.movieImageView.image = UIImage(data: posterData)

@@ -24,7 +24,6 @@ final class MovieDetailViewController: UIViewController {
     // MARK: - Private Properties
 
     private var imdbID = String()
-    // private var movieDetail: MovieDetail?
 
     // MARK: - Initializers
 
@@ -63,12 +62,10 @@ final class MovieDetailViewController: UIViewController {
     // MARK: - Private Methods
 
     private func setupView() {
-//        let movieURL = NetWorkManager.getMovieURl(urlMovieType: nil, id: MovieDetailViewController.id, page: nil)
         view.backgroundColor = .black
         createTableView()
         updateView()
-        getData(filmID: "\(MovieDetailViewController.id)")
-//        fetchDetailData(url: movieURL)
+        getData(filmID: MovieDetailViewController.id)
     }
 
     private func createTableView() {
@@ -87,15 +84,6 @@ final class MovieDetailViewController: UIViewController {
         view.addSubview(tableview)
     }
 
-//    private func fetchDetailData(url: String) {
-//        NetWorkManager.fetchDataDetail(url: url) { [weak self] movieDetail in
-//            self?.movieDetail = movieDetail
-//            DispatchQueue.main.async {
-//                self?.tableview.reloadData()
-//            }
-//        }
-//    }
-
     private func addGesture() {
         let gesture = UITapGestureRecognizer()
         gesture.addTarget(self, action: #selector(showWebView))
@@ -110,8 +98,8 @@ final class MovieDetailViewController: UIViewController {
         }
     }
 
-    private func getData(filmID: String) {
-        viewModel?.getData(url: filmID)
+    private func getData(filmID: Int) {
+        viewModel?.getData(filmID: filmID)
     }
 }
 

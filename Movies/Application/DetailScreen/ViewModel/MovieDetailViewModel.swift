@@ -6,20 +6,25 @@ import Foundation
 protocol MovieDetailViewModelProtocol {
     var movieDetail: MovieDetail? { get set }
     var updateViewData: ((MovieDetail) -> ())? { get set }
-    func getData(url: String)
+    func getData(filmID: Int)
 }
 
 final class MovieDetailViewModel: MovieDetailViewModelProtocol {
     var updateViewData: ((MovieDetail) -> ())?
     var movieDetail: MovieDetail?
 
-    func getData(url: String) {
-        let movieURL = NetWorkManager.getMovieURl(urlMovieType: nil, id: MovieDetailViewController.id, page: nil)
-        fetchDetailData(url: movieURL)
+    private var movieAPIService: MovieAPIServiceProtocol?
+
+    init(movieAPIService: MovieAPIServiceProtocol) {
+        self.movieAPIService = movieAPIService
     }
 
-    func fetchDetailData(url: String) {
-        NetWorkManager.fetchDataDetail(url: url) { [weak self] movieDetail in
+    func getData(filmID: Int) {
+        fetchDetailData(filmID: filmID)
+    }
+
+    func fetchDetailData(filmID: Int) {
+        movieAPIService?.fetchDataDetail(filmID: filmID) { [weak self] movieDetail in
             self?.movieDetail = movieDetail
             self?.updateViewData?(movieDetail)
         }

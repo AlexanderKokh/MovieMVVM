@@ -92,7 +92,7 @@ final class DetailMovieTableViewCell: UITableViewCell {
     func configureCell(movie: MovieDetail) {
         if let backgroundImage = movie.backdropPath {
             DispatchQueue.global().async {
-                guard let backgroundImageURL = URL(string: NetWorkManager.imageURLw500 + backgroundImage)
+                guard let backgroundImageURL = URL(string: MovieAPIService.imageURLw500 + backgroundImage)
                 else { return }
                 guard let backgroundImageData = try? Data(contentsOf: backgroundImageURL) else { return }
                 DispatchQueue.main.async {

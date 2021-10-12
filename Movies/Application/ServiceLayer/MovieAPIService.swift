@@ -1,4 +1,4 @@
-// NetWorkManager.swift
+// MovieAPIService.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
@@ -9,15 +9,21 @@ enum URLList: String {
     case cast = "/credits"
 }
 
-final class NetWorkManager {
+protocol MovieAPIServiceProtocol {
+    func fetchData(groupID: Int, compleation: @escaping (_ movies: [Movie]) -> ())
+    func fetchDataDetail(filmID: Int, compleation: @escaping (_ movieDetail: MovieDetail) -> ())
+    func fetchCastData(filmID: Int, compleation: @escaping (_ cast: [Cast]) -> ())
+}
+
+final class MovieAPIService: MovieAPIServiceProtocol {
     // MARK: - Public Properties
 
     static let imageURLw500 = "https://image.tmdb.org/t/p/w500/"
 
     // MARK: - Public methods
 
-    static func fetchData(url: String, compleation: @escaping (_ movies: [Movie]) -> ()) {
-        let movieURL = url
+    func fetchData(groupID: Int, compleation: @escaping (_ movies: [Movie]) -> ()) {
+        let movieURL = getURL(groupId: groupID)
         guard let url = URL(string: movieURL) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else { return }
@@ -33,8 +39,10 @@ final class NetWorkManager {
         }.resume()
     }
 
-    static func fetchDataDetail(url: String, compleation: @escaping (_ movieDetail: MovieDetail) -> ()) {
-        guard let url = URL(string: url) else { return }
+    func fetchDataDetail(filmID: Int, compleation: @escaping (_ movieDetail: MovieDetail) -> ()) {
+        let movieURL = getMovieURl(urlMovieType: nil, id: filmID, page: nil)
+
+        guard let url = URL(string: movieURL) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else { return }
             do {
@@ -47,8 +55,10 @@ final class NetWorkManager {
         }.resume()
     }
 
-    static func fetchCastData(url: String, compleation: @escaping (_ cast: [Cast]) -> ()) {
-        guard let url = URL(string: url) else { return }
+    func fetchCastData(filmID: Int, compleation: @escaping (_ cast: [Cast]) -> ()) {
+        let movieURL = getMovieURl(urlMovieType: .cast, id: filmID)
+
+        guard let url = URL(string: movieURL) else { return }
 
         URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data else { return }
@@ -66,7 +76,7 @@ final class NetWorkManager {
         }.resume()
     }
 
-    static func getMovieURl(urlMovieType: URLList? = nil, id: Int? = nil, page: Int? = nil) -> String {
+    private func getMovieURl(urlMovieType: URLList? = nil, id: Int? = nil, page: Int? = nil) -> String {
         let connection = Host.shared
         var connectionString = "\(connection.host)"
 
@@ -86,5 +96,20 @@ final class NetWorkManager {
         }
 
         return connectionString
+    }
+
+    private func getURL(groupId: Int) -> String {
+        let url: String?
+        switch groupId {
+        case 0:
+            url = getMovieURl(urlMovieType: .topRate)
+        case 1:
+            url = getMovieURl(urlMovieType: .popular)
+        case 2:
+            url = getMovieURl(urlMovieType: .nowPlauing)
+        default:
+            url = getMovieURl(urlMovieType: .topRate)
+        }
+        return url ?? ""
     }
 }

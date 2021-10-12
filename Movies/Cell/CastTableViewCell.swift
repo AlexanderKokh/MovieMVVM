@@ -18,6 +18,7 @@ final class CastTableViewCell: UITableViewCell {
 
     private var cast: [Cast] = []
     private let cellIdintifier = "ActorCell"
+    private lazy var movieAPIService = MovieAPIService()
 
     // MARK: - Initializers
 
@@ -77,9 +78,7 @@ final class CastTableViewCell: UITableViewCell {
     }
 
     private func fetchDetailData() {
-        let movieURL = NetWorkManager.getMovieURl(urlMovieType: .cast, id: MovieDetailViewController.id)
-
-        NetWorkManager.fetchCastData(url: movieURL) { [weak self] cast in
+        movieAPIService.fetchCastData(filmID: MovieDetailViewController.id) { [weak self] cast in
             self?.cast = cast
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()

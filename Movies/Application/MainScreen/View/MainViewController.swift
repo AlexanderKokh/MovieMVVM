@@ -57,7 +57,7 @@ final class MovieViewController: UIViewController {
 
     @objc private func showMovieList(selector: UIButton) {
         buttonTransformAnimate(selector)
-        getData(groupId: selector.tag)
+        getData(groupID: selector.tag)
     }
 
     // MARK: - Private Methods
@@ -167,8 +167,8 @@ final class MovieViewController: UIViewController {
         }
     }
 
-    private func getData(groupId: Int) {
-        viewModel?.getData(groupId: groupId)
+    private func getData(groupID: Int) {
+        viewModel?.getData(groupID: groupID)
     }
 }
 
@@ -177,7 +177,9 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            let vc = MovieDetailViewController(viewModel: MovieDetailViewModel())
+            let movieAPIService = MovieAPIService()
+            let viewModel = MovieDetailViewModel(movieAPIService: movieAPIService)
+            let vc = MovieDetailViewController(viewModel: viewModel)
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
             MovieDetailViewController.id = data[indexPath.row].id ?? 1
