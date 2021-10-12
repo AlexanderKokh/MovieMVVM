@@ -6,6 +6,10 @@ import UIKit
 final class CastTableViewCell: UITableViewCell {
     // MARK: - Visual Components
 
+    private enum Constants {
+        static let cellIdintifier = "ActorCell"
+    }
+
     private var collectionView: UICollectionView!
     private var id: Int?
 
@@ -18,14 +22,13 @@ final class CastTableViewCell: UITableViewCell {
     // MARK: - Private Properties
 
     private var cast: [Cast] = []
-    private let cellIdintifier = "ActorCell"
+    private let cellIdintifier = Constants.cellIdintifier
     private lazy var movieAPIService = MovieAPIService()
 
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        // setupCell(FilmID: Int)
     }
 
     @available(*, unavailable)

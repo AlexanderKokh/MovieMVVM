@@ -179,10 +179,13 @@ extension MovieViewController: UITableViewDelegate {
         if case let .loaded(data) = props {
             let movieAPIService = MovieAPIService()
             let viewModel = MovieDetailViewModel(movieAPIService: movieAPIService)
-            let vc = MovieDetailViewController(viewModel: viewModel)
+            let vc = MovieDetailViewController(
+                viewModel: viewModel,
+                id: data[indexPath.row].id ?? 1
+            )
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
-            vc.id = data[indexPath.row].id ?? 1
+            // vc.id = data[indexPath.row].id ?? 1
 
             self.navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: titleLabel,

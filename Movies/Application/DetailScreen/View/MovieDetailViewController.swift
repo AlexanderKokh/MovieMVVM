@@ -6,6 +6,11 @@ import UIKit
 final class MovieDetailViewController: UIViewController {
     // MARK: - Visual Components
 
+    private enum Constants {
+        static let detailCellIdentifier = "DetailCell"
+        static let castCellIdentifier = "CastCell"
+    }
+
     private var tableview: UITableView!
     private var viewModel: MovieDetailViewModelProtocol?
     private let movieImageView: UIImageView = {
@@ -17,19 +22,17 @@ final class MovieDetailViewController: UIViewController {
         return view
     }()
 
-    // MARK: - Public Properties
-
-    var id = Int()
-
-    // MARK: - Private Properties
-
-    private var imdbID = String()
+    private var id = Int()
 
     // MARK: - Initializers
 
-    convenience init(viewModel: MovieDetailViewModelProtocol) {
+    convenience init(
+        viewModel: MovieDetailViewModelProtocol,
+        id: Int
+    ) {
         self.init()
         self.viewModel = viewModel
+        self.id = id
     }
 
     // MARK: - UIViewController
@@ -55,7 +58,7 @@ final class MovieDetailViewController: UIViewController {
 
     @objc private func showWebView() {
         let vc = WebViewController()
-        vc.imdbID = String(id)
+        vc.imdbID = viewModel?.movieDetail?.imdbID
         present(vc, animated: true)
     }
 
@@ -75,8 +78,8 @@ final class MovieDetailViewController: UIViewController {
         tableview = UITableView(frame: CGRect(x: 0, y: 0, width: tableViewWigth, height: tableViewHeight))
         tableview.dataSource = self
         tableview.delegate = self
-        tableview.register(DetailMovieTableViewCell.self, forCellReuseIdentifier: "DetailCell")
-        tableview.register(CastTableViewCell.self, forCellReuseIdentifier: "CastCell")
+        tableview.register(DetailMovieTableViewCell.self, forCellReuseIdentifier: Constants.detailCellIdentifier)
+        tableview.register(CastTableViewCell.self, forCellReuseIdentifier: Constants.castCellIdentifier)
         tableview.estimatedRowHeight = 200.0
         tableview.rowHeight = UITableView.automaticDimension
         tableview.separatorColor = .clear
@@ -134,7 +137,7 @@ extension MovieDetailViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             if let cell = tableview.dequeueReusableCell(
-                withIdentifier: "DetailCell",
+                withIdentifier: Constants.detailCellIdentifier,
                 for: indexPath
             ) as? DetailMovieTableViewCell {
                 guard let movieDetail = viewModel?.movieDetail else { return UITableViewCell() }
@@ -146,7 +149,7 @@ extension MovieDetailViewController: UITableViewDataSource {
             }
         default:
             if let cell = tableview.dequeueReusableCell(
-                withIdentifier: "CastCell",
+                withIdentifier: Constants.castCellIdentifier,
                 for: indexPath
             ) as? CastTableViewCell {
                 cell.setupCell(filmID: id)
