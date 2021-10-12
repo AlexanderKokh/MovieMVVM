@@ -14,6 +14,8 @@
 		FC60523E2715F48600155128 /* ImageAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC60523D2715F48600155128 /* ImageAPIService.swift */; };
 		FC6052412715FF4000155128 /* URLSession + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6052402715FF4000155128 /* URLSession + Extension.swift */; };
 		FC605244271606F000155128 /* UITableViewCell + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC605243271606F000155128 /* UITableViewCell + Extension.swift */; };
+		FC60524727160A1A00155128 /* UICollectionViewCell + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC60524627160A1A00155128 /* UICollectionViewCell + Extension.swift */; };
+		FC60524B27160B4100155128 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC60524A27160B4100155128 /* ImageLoader.swift */; };
 		FC64E63826B3FFFA00200535 /* MovieAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC64E63726B3FFFA00200535 /* MovieAPIService.swift */; };
 		FC659A722714F46D0013AA48 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC659A712714F46D0013AA48 /* UIViewController + Extension.swift */; };
 		FC6657B026B2027400D7D5C2 /* DetailMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */; };
@@ -40,6 +42,8 @@
 		FC60523D2715F48600155128 /* ImageAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPIService.swift; sourceTree = "<group>"; };
 		FC6052402715FF4000155128 /* URLSession + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession + Extension.swift"; sourceTree = "<group>"; };
 		FC605243271606F000155128 /* UITableViewCell + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell + Extension.swift"; sourceTree = "<group>"; };
+		FC60524627160A1A00155128 /* UICollectionViewCell + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell + Extension.swift"; sourceTree = "<group>"; };
+		FC60524A27160B4100155128 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		FC64E63726B3FFFA00200535 /* MovieAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPIService.swift; sourceTree = "<group>"; };
 		FC659A712714F46D0013AA48 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovie.swift; sourceTree = "<group>"; };
@@ -127,7 +131,9 @@
 			children = (
 				FC659A712714F46D0013AA48 /* UIViewController + Extension.swift */,
 				FC605243271606F000155128 /* UITableViewCell + Extension.swift */,
+				FC60524627160A1A00155128 /* UICollectionViewCell + Extension.swift */,
 				FC6052402715FF4000155128 /* URLSession + Extension.swift */,
+				FC60524A27160B4100155128 /* ImageLoader.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -364,6 +370,8 @@
 				FC64E63826B3FFFA00200535 /* MovieAPIService.swift in Sources */,
 				FC659A722714F46D0013AA48 /* UIViewController + Extension.swift in Sources */,
 				FC6052302715DF4900155128 /* MovieDetailViewModel.swift in Sources */,
+				FC60524727160A1A00155128 /* UICollectionViewCell + Extension.swift in Sources */,
+				FC60524B27160B4100155128 /* ImageLoader.swift in Sources */,
 				FC68AD6726B144B400BC6CCB /* Movie.swift in Sources */,
 				FCA976F3271477A900E2FB98 /* MainScreenViewModel.swift in Sources */,
 				FC83695726B4873E003B9018 /* WebViewController.swift in Sources */,
