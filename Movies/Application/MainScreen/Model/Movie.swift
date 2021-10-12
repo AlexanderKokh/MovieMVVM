@@ -3,6 +3,13 @@
 
 import Foundation
 
+/// UI Data Driven
+enum ViewData {
+    case loading
+    case loaded([Movie])
+    case failure(description: String?, onReload: () -> ())
+}
+
 /// Модель  списка  фильмов
 struct IncomingJson: Decodable {
     /// Массив фильмов с кратким описанием
