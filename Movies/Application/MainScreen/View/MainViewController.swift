@@ -19,9 +19,9 @@ final class MovieViewController: UIViewController {
         static let downloadError = "Ошибка загрузки"
     }
 
-    private var tableView: UITableView!
-    private var viewModel: MainScreenViewModelProtocol!
-    private var activityIndicator: UIActivityIndicatorView!
+    private var tableView: UITableView?
+    private var viewModel: MainScreenViewModelProtocol?
+    private var activityIndicator: UIActivityIndicatorView?
     private var props: ViewData = .loading {
         didSet {
             view.setNeedsLayout()
@@ -47,14 +47,14 @@ final class MovieViewController: UIViewController {
 
         switch props {
         case .loading:
-            activityIndicator.startAnimating()
-            tableView.isHidden = true
+            activityIndicator?.startAnimating()
+            tableView?.isHidden = true
         case .loaded:
-            activityIndicator.stopAnimating()
-            tableView.isHidden = false
-            tableView.reloadData()
+            activityIndicator?.stopAnimating()
+            tableView?.isHidden = false
+            tableView?.reloadData()
         case let .failure(description, _):
-            activityIndicator.stopAnimating()
+            activityIndicator?.stopAnimating()
             showAlert(title: Constants.downloadError, message: description)
         }
     }
@@ -78,10 +78,10 @@ final class MovieViewController: UIViewController {
 
     private func createIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = .lightGray
-        activityIndicator.hidesWhenStopped = true
-        view.addSubview(activityIndicator)
-        activityIndicator.center = view.center
+        activityIndicator?.color = .lightGray
+        activityIndicator?.hidesWhenStopped = true
+        view.addSubview(activityIndicator ?? UIActivityIndicatorView())
+        activityIndicator?.center = view.center
     }
 
     private func createFilmButtons() {
@@ -118,13 +118,13 @@ final class MovieViewController: UIViewController {
         let displayHeight: CGFloat = view.frame.height
 
         tableView = UITableView(frame: CGRect(x: 0, y: 100, width: displayWidth, height: displayHeight))
-        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.cellID)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.estimatedRowHeight = 200.0
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = .black
-        view.addSubview(tableView)
+        tableView?.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.cellID)
+        tableView?.dataSource = self
+        tableView?.delegate = self
+        tableView?.estimatedRowHeight = 200.0
+        tableView?.rowHeight = UITableView.automaticDimension
+        tableView?.backgroundColor = .black
+        view.addSubview(tableView ?? UITableView())
     }
 
     private func configureRequestButton(title: String) -> UIButton {
@@ -165,7 +165,7 @@ final class MovieViewController: UIViewController {
     }
 
     private func updateView() {
-        viewModel.updateViewData = { [weak self] viewData in
+        viewModel?.updateViewData = { [weak self] viewData in
             DispatchQueue.main.async {
                 self?.props = viewData
             }
@@ -173,7 +173,7 @@ final class MovieViewController: UIViewController {
     }
 
     private func getData(groupId: Int) {
-        viewModel.getData(groupId: groupId)
+        viewModel?.getData(groupId: groupId)
     }
 }
 
