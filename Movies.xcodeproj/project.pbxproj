@@ -10,6 +10,7 @@
 		FC5AE4EC26B2EB46004DE349 /* CastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5AE4EB26B2EB46004DE349 /* CastTableViewCell.swift */; };
 		FC5AE4EF26B2F497004DE349 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5AE4EE26B2F497004DE349 /* Cast.swift */; };
 		FC5AE4F226B2FB0C004DE349 /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5AE4F126B2FB0C004DE349 /* CastCollectionViewCell.swift */; };
+		FC6052302715DF4900155128 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC60522F2715DF4900155128 /* MovieDetailViewModel.swift */; };
 		FC64E63826B3FFFA00200535 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC64E63726B3FFFA00200535 /* NetWorkManager.swift */; };
 		FC659A722714F46D0013AA48 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC659A712714F46D0013AA48 /* UIViewController + Extension.swift */; };
 		FC6657B026B2027400D7D5C2 /* DetailMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */; };
@@ -32,6 +33,7 @@
 		FC5AE4EB26B2EB46004DE349 /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
 		FC5AE4EE26B2F497004DE349 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		FC5AE4F126B2FB0C004DE349 /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
+		FC60522F2715DF4900155128 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		FC64E63726B3FFFA00200535 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
 		FC659A712714F46D0013AA48 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovie.swift; sourceTree = "<group>"; };
@@ -63,6 +65,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC60522B2715DECF00155128 /* DetailScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FC60522C2715DEDD00155128 /* Model */,
+				FC60522D2715DEEB00155128 /* View */,
+				FC60522E2715DEF500155128 /* ViewModel */,
+			);
+			path = DetailScreen;
+			sourceTree = "<group>";
+		};
+		FC60522C2715DEDD00155128 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FC60522D2715DEEB00155128 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FC68AD7326B18E5900BC6CCB /* MovieDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FC60522E2715DEF500155128 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FC60522F2715DF4900155128 /* MovieDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		FC64E63526B3FAF300200535 /* NetWorkManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,7 +130,6 @@
 		FC68AD6526B1449D00BC6CCB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */,
 				FC5AE4EE26B2F497004DE349 /* Cast.swift */,
 			);
 			path = Model;
@@ -104,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				FC83695626B4873E003B9018 /* WebViewController.swift */,
-				FC68AD7326B18E5900BC6CCB /* MovieDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -112,6 +146,7 @@
 		FC68AD7026B18C2500BC6CCB /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				FC60522B2715DECF00155128 /* DetailScreen */,
 				FCA976ED271476BD00E2FB98 /* MainScreen */,
 				FCAB36D826AF0A5B009B7F83 /* AppDelegate.swift */,
 				FCAB36DA26AF0A5B009B7F83 /* SceneDelegate.swift */,
@@ -126,9 +161,9 @@
 		FCA976ED271476BD00E2FB98 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				FCA976F0271476E000E2FB98 /* ViewModel */,
-				FCA976EF271476D300E2FB98 /* View */,
 				FCA976EE271476CC00E2FB98 /* Model */,
+				FCA976EF271476D300E2FB98 /* View */,
+				FCA976F0271476E000E2FB98 /* ViewModel */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -308,6 +343,7 @@
 				FC68AD7426B18E5900BC6CCB /* MovieDetailViewController.swift in Sources */,
 				FC64E63826B3FFFA00200535 /* NetWorkManager.swift in Sources */,
 				FC659A722714F46D0013AA48 /* UIViewController + Extension.swift in Sources */,
+				FC6052302715DF4900155128 /* MovieDetailViewModel.swift in Sources */,
 				FC68AD6726B144B400BC6CCB /* Movie.swift in Sources */,
 				FCA976F3271477A900E2FB98 /* MainScreenViewModel.swift in Sources */,
 				FC83695726B4873E003B9018 /* WebViewController.swift in Sources */,

@@ -7,6 +7,7 @@ import Foundation
 enum ViewData {
     case loading
     case loaded([Movie])
+    // case loaded([Model])
     case failure(description: String?, onReload: () -> ())
 }
 

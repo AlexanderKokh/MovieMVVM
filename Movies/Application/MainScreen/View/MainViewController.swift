@@ -177,7 +177,7 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            let vc = MovieDetailViewController()
+            let vc = MovieDetailViewController(viewModel: MovieDetailViewModel())
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
             MovieDetailViewController.id = data[indexPath.row].id ?? 1

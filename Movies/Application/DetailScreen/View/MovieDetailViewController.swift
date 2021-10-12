@@ -7,7 +7,7 @@ final class MovieDetailViewController: UIViewController {
     // MARK: - Visual Components
 
     private var tableview: UITableView!
-
+    private var viewModel: MovieDetailViewModelProtocol?
     private let movieImageView: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
@@ -24,7 +24,14 @@ final class MovieDetailViewController: UIViewController {
     // MARK: - Private Properties
 
     private var imdbID = String()
-    private var movieDetail: MovieDetail?
+    // private var movieDetail: MovieDetail?
+
+    // MARK: - Initializers
+
+    convenience init(viewModel: MovieDetailViewModelProtocol) {
+        self.init()
+        self.viewModel = viewModel
+    }
 
     // MARK: - UIViewController
 
@@ -56,10 +63,12 @@ final class MovieDetailViewController: UIViewController {
     // MARK: - Private Methods
 
     private func setupView() {
-        let movieURL = NetWorkManager.getMovieURl(urlMovieType: nil, id: MovieDetailViewController.id, page: nil)
+//        let movieURL = NetWorkManager.getMovieURl(urlMovieType: nil, id: MovieDetailViewController.id, page: nil)
         view.backgroundColor = .black
         createTableView()
-        fetchDetailData(url: movieURL)
+        updateView()
+        getData(filmID: "\(MovieDetailViewController.id)")
+//        fetchDetailData(url: movieURL)
     }
 
     private func createTableView() {
@@ -78,19 +87,31 @@ final class MovieDetailViewController: UIViewController {
         view.addSubview(tableview)
     }
 
-    private func fetchDetailData(url: String) {
-        NetWorkManager.fetchDataDetail(url: url) { [weak self] movieDetail in
-            self?.movieDetail = movieDetail
+//    private func fetchDetailData(url: String) {
+//        NetWorkManager.fetchDataDetail(url: url) { [weak self] movieDetail in
+//            self?.movieDetail = movieDetail
+//            DispatchQueue.main.async {
+//                self?.tableview.reloadData()
+//            }
+//        }
+//    }
+
+    private func addGesture() {
+        let gesture = UITapGestureRecognizer()
+        gesture.addTarget(self, action: #selector(showWebView))
+        view.addGestureRecognizer(gesture)
+    }
+
+    private func updateView() {
+        viewModel?.updateViewData = { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableview.reloadData()
             }
         }
     }
 
-    private func addGesture() {
-        let gesture = UITapGestureRecognizer()
-        gesture.addTarget(self, action: #selector(showWebView))
-        view.addGestureRecognizer(gesture)
+    private func getData(filmID: String) {
+        viewModel?.getData(url: filmID)
     }
 }
 
@@ -116,7 +137,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                 withIdentifier: "DetailCell",
                 for: indexPath
             ) as? DetailMovieTableViewCell {
-                guard let movieDetail = movieDetail else { return UITableViewCell() }
+                guard let movieDetail = viewModel?.movieDetail else { return UITableViewCell() }
                 cell.configureCell(movie: movieDetail)
                 cell.selectionStyle = .none
                 cell.backgroundColor = .black
