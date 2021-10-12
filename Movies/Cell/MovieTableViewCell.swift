@@ -84,15 +84,7 @@ final class MovieTableViewCell: UITableViewCell {
 
         id = movie.id
 
-        if let poster = movie.posterPath {
-            DispatchQueue.global().async {
-                guard let posterURL = URL(string: MovieAPIService.imageURLw500 + poster) else { return }
-                guard let posterData = try? Data(contentsOf: posterURL) else { return }
-                DispatchQueue.main.async {
-                    self.movieImageView.image = UIImage(data: posterData)
-                }
-            }
-        }
+        loadImage(path: movie.posterPath, imageView: movieImageView)
     }
 
     // MARK: - Private Methods

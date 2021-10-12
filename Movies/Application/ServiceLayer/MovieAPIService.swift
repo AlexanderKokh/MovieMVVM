@@ -18,8 +18,6 @@ protocol MovieAPIServiceProtocol {
 final class MovieAPIService: MovieAPIServiceProtocol {
     // MARK: - Public Properties
 
-    static let imageURLw500 = "https://image.tmdb.org/t/p/w500/"
-
     // MARK: - Public methods
 
     func fetchData(groupID: Int, compleation: @escaping (_ movies: [Movie]) -> ()) {

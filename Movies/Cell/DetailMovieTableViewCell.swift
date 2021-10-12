@@ -70,6 +70,7 @@ final class DetailMovieTableViewCell: UITableViewCell {
     // MARK: - Public Properties
 
     var imdbID: String?
+    private lazy var imageService = ImageAPIService()
 
     // MARK: - Initializers
 
@@ -90,16 +91,7 @@ final class DetailMovieTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configureCell(movie: MovieDetail) {
-        if let backgroundImage = movie.backdropPath {
-            DispatchQueue.global().async {
-                guard let backgroundImageURL = URL(string: MovieAPIService.imageURLw500 + backgroundImage)
-                else { return }
-                guard let backgroundImageData = try? Data(contentsOf: backgroundImageURL) else { return }
-                DispatchQueue.main.async {
-                    self.movieBackGroundImageView.image = UIImage(data: backgroundImageData)
-                }
-            }
-        }
+        loadImage(path: movie.backdropPath, imageView: movieBackGroundImageView)
 
         var moviedescription = "*"
         if let movieDate = movie.releaseDate {
