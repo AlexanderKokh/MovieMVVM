@@ -9,6 +9,7 @@ final class MovieDetailViewController: UIViewController {
     private enum Constants {
         static let detailCellIdentifier = "DetailCell"
         static let castCellIdentifier = "CastCell"
+        static let downloadError = "Ошибка загрузки"
     }
 
     private var tableview: UITableView!
@@ -106,7 +107,7 @@ final class MovieDetailViewController: UIViewController {
         viewModel?.showError = { [weak self] in
             DispatchQueue.main.async {
                 self?.showAlert(
-                    title: "Ошибка загрузки",
+                    title: Constants.downloadError,
                     message: self?.viewModel?.error
                 )
             }

@@ -3,9 +3,9 @@
 
 import Foundation
 
-typealias HandlerMovie = (Result<[Movie], DownLoaderError>) -> ()
-typealias HandlerMovieDetail = (Result<MovieDetail, DownLoaderError>) -> ()
-typealias HandlerCast = (Result<[Cast], DownLoaderError>) -> ()
+typealias MovieHandler = (Result<[Movie], DownLoaderError>) -> ()
+typealias MovieDetailHandler = (Result<MovieDetail, DownLoaderError>) -> ()
+typealias CastHandler = (Result<[Cast], DownLoaderError>) -> ()
 
 /// Тип запроса на получение фильма из  интернета
 enum URLList: String {
@@ -21,9 +21,9 @@ enum DownLoaderError: Error {
 }
 
 protocol MovieAPIServiceProtocol {
-    func fetchDataDetail(filmID: Int, compleation: @escaping (HandlerMovieDetail))
-    func fetchData(groupID: Int, compleation: @escaping (HandlerMovie))
-    func fetchCastData(filmID: Int, compleation: @escaping (HandlerCast))
+    func fetchDataDetail(filmID: Int, compleation: @escaping (MovieDetailHandler))
+    func fetchData(groupID: Int, compleation: @escaping (MovieHandler))
+    func fetchCastData(filmID: Int, compleation: @escaping (CastHandler))
 }
 
 final class MovieAPIService: MovieAPIServiceProtocol {
@@ -33,7 +33,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
 
     // MARK: - Public methods
 
-    func fetchData(groupID: Int, compleation: @escaping (HandlerMovie)) {
+    func fetchData(groupID: Int, compleation: @escaping (MovieHandler)) {
         let movieURL = getURL(groupId: groupID)
         guard let url = URL(string: movieURL) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -50,7 +50,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
         }.resume()
     }
 
-    func fetchDataDetail(filmID: Int, compleation: @escaping HandlerMovieDetail) {
+    func fetchDataDetail(filmID: Int, compleation: @escaping MovieDetailHandler) {
         let movieURL = getMovieURl(urlMovieType: nil, id: filmID, page: nil)
 
         guard let url = URL(string: movieURL) else { return }
@@ -68,7 +68,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
         }.resume()
     }
 
-    func fetchCastData(filmID: Int, compleation: @escaping (HandlerCast)) {
+    func fetchCastData(filmID: Int, compleation: @escaping (CastHandler)) {
         let movieURL = getMovieURl(urlMovieType: .cast, id: filmID)
 
         guard let url = URL(string: movieURL) else { return }
