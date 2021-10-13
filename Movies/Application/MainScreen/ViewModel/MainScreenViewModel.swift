@@ -4,44 +4,36 @@
 import Foundation
 
 protocol MainScreenViewModelProtocol {
-    var updateViewData: ((ViewData) -> ())? { get set }
-    func getData(groupId: Int)
+    var updateViewData: ((ViewData<Movie>) -> ())? { get set }
+    func getData(groupID: Int)
 }
 
 final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: - Public Properties
 
-    var updateViewData: ((ViewData) -> ())?
+    var updateViewData: ((ViewData<Movie>) -> ())?
+
+    // MARK: - Private Properties
+
+    private var movieAPIService: MovieAPIServiceProtocol?
 
     // MARK: - Initializers
 
-    init() {
+    init(movieAPIService: MovieAPIServiceProtocol) {
+        self.movieAPIService = movieAPIService
         updateViewData?(.loading)
     }
 
     // MARK: - Public methods
 
-    func getData(groupId: Int) {
-        let url = getURL(groupId: groupId)
-        NetWorkManager.fetchData(url: url) { [weak self] movies in
-            self?.updateViewData?(.loaded(movies))
+    func getData(groupID: Int) {
+        movieAPIService?.fetchData(groupID: groupID) { [weak self] result in
+            switch result {
+            case let .success(movies):
+                self?.updateViewData?(.loaded(movies))
+            case let .failure(.jsonSerializationError(error)):
+                self?.updateViewData?(.failure(description: error.localizedDescription))
+            }
         }
-    }
-
-    // MARK: - Private methods
-
-    private func getURL(groupId: Int) -> String {
-        let url: String?
-        switch groupId {
-        case 0:
-            url = NetWorkManager.getMovieURl(urlMovieType: .topRate)
-        case 1:
-            url = NetWorkManager.getMovieURl(urlMovieType: .popular)
-        case 2:
-            url = NetWorkManager.getMovieURl(urlMovieType: .nowPlauing)
-        default:
-            url = NetWorkManager.getMovieURl(urlMovieType: .topRate)
-        }
-        return url ?? ""
     }
 }

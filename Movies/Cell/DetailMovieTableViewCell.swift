@@ -4,7 +4,11 @@
 import UIKit
 
 final class DetailMovieTableViewCell: UITableViewCell {
-    // MARK: - Visual Components
+    // MARK: - Public Properties
+
+    var imdbID: String?
+
+    // MARK: - Private Properties
 
     private let movieImageView: UIImageView = {
         let view = UIImageView()
@@ -67,10 +71,6 @@ final class DetailMovieTableViewCell: UITableViewCell {
         return label
     }()
 
-    // MARK: - Public Properties
-
-    var imdbID: String?
-
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -90,16 +90,7 @@ final class DetailMovieTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configureCell(movie: MovieDetail) {
-        if let backgroundImage = movie.backdropPath {
-            DispatchQueue.global().async {
-                guard let backgroundImageURL = URL(string: NetWorkManager.imageURLw500 + backgroundImage)
-                else { return }
-                guard let backgroundImageData = try? Data(contentsOf: backgroundImageURL) else { return }
-                DispatchQueue.main.async {
-                    self.movieBackGroundImageView.image = UIImage(data: backgroundImageData)
-                }
-            }
-        }
+        loadImage(path: movie.backdropPath, imageView: movieBackGroundImageView)
 
         var moviedescription = "*"
         if let movieDate = movie.releaseDate {

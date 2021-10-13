@@ -4,7 +4,11 @@
 import UIKit
 
 final class MovieTableViewCell: UITableViewCell {
-    // MARK: - Visual Components
+    // MARK: - Public Properties
+
+    var id: Int?
+
+    // MARK: - Private Properties
 
     private let movieImageView: UIImageView = {
         let view = UIImageView()
@@ -47,10 +51,6 @@ final class MovieTableViewCell: UITableViewCell {
         return label
     }()
 
-    // MARK: - Public Properties
-
-    var id: Int?
-
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -84,15 +84,7 @@ final class MovieTableViewCell: UITableViewCell {
 
         id = movie.id
 
-        if let poster = movie.posterPath {
-            DispatchQueue.global().async {
-                guard let posterURL = URL(string: NetWorkManager.imageURLw500 + poster) else { return }
-                guard let posterData = try? Data(contentsOf: posterURL) else { return }
-                DispatchQueue.main.async {
-                    self.movieImageView.image = UIImage(data: posterData)
-                }
-            }
-        }
+        loadImage(path: movie.posterPath, imageView: movieImageView)
     }
 
     // MARK: - Private Methods

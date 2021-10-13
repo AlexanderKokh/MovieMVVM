@@ -4,7 +4,7 @@
 import UIKit
 
 final class CastCollectionViewCell: UICollectionViewCell {
-    // MARK: - Visual Components
+    // MARK: - Private Properties
 
     private let actorImageView: UIImageView = {
         let view = UIImageView()
@@ -25,16 +25,6 @@ final class CastCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Methods
 
     func configureCell(cast: Cast) {
-        if let pathToImage = cast.profilePath {
-            DispatchQueue.global().async {
-                guard let backgroundImageURL = URL(string: NetWorkManager.imageURLw500 + pathToImage) else { return }
-                guard let backgroundImageData = try? Data(contentsOf: backgroundImageURL) else { return }
-                DispatchQueue.main.async {
-                    self.actorImageView.image = UIImage(data: backgroundImageData)
-                }
-            }
-        } else {
-            actorImageView.image = UIImage(named: "NoFoto")
-        }
+        loadImage(path: cast.profilePath, imageView: actorImageView)
     }
 }

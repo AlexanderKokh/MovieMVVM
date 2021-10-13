@@ -22,7 +22,7 @@ final class MovieViewController: UIViewController {
     private var tableView: UITableView?
     private var viewModel: MainScreenViewModelProtocol?
     private var activityIndicator: UIActivityIndicatorView?
-    private var props: ViewData = .loading {
+    private var props: ViewData<Movie> = .loading {
         didSet {
             switch props {
             case .loading:
@@ -32,7 +32,7 @@ final class MovieViewController: UIViewController {
                 activityIndicator?.stopAnimating()
                 tableView?.isHidden = false
                 tableView?.reloadData()
-            case let .failure(description, _):
+            case let .failure(description):
                 activityIndicator?.stopAnimating()
                 showAlert(title: Constants.downloadError, message: description)
             }
@@ -57,7 +57,7 @@ final class MovieViewController: UIViewController {
 
     @objc private func showMovieList(selector: UIButton) {
         buttonTransformAnimate(selector)
-        getData(groupId: selector.tag)
+        getData(groupID: selector.tag)
     }
 
     // MARK: - Private Methods
@@ -167,8 +167,8 @@ final class MovieViewController: UIViewController {
         }
     }
 
-    private func getData(groupId: Int) {
-        viewModel?.getData(groupId: groupId)
+    private func getData(groupID: Int) {
+        viewModel?.getData(groupID: groupID)
     }
 }
 
@@ -177,18 +177,22 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            let vc = MovieDetailViewController()
+            let movieAPIService = MovieAPIService()
+            let viewModel = MovieDetailViewModel(movieAPIService: movieAPIService)
+            let vc = MovieDetailViewController(
+                viewModel: viewModel,
+                id: data[indexPath.row].id ?? 1
+            )
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
-            MovieDetailViewController.id = data[indexPath.row].id ?? 1
 
-            navigationItem.backBarButtonItem = UIBarButtonItem(
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: titleLabel,
                 style: .plain,
                 target: nil,
                 action: nil
             )
-            navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 
@@ -215,6 +219,7 @@ extension MovieViewController: UITableViewDataSource {
             ) as? MovieTableViewCell {
                 cell.configureCell(movie: data[indexPath.row])
                 cell.backgroundColor = .black
+                cell.selectionStyle = .none
                 return cell
             }
         }

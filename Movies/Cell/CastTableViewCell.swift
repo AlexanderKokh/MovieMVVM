@@ -4,9 +4,17 @@
 import UIKit
 
 final class CastTableViewCell: UITableViewCell {
-    // MARK: - Visual Components
+    // MARK: - Private Properties
+
+    private enum Constants {
+        static let cellIdintifier = "ActorCell"
+    }
 
     private var collectionView: UICollectionView!
+    private var id: Int?
+    private var cast: [Cast] = []
+    private let cellIdintifier = Constants.cellIdintifier
+    private lazy var movieAPIService = MovieAPIService()
 
     private let backGroundView: UIView = {
         let view = UIView()
@@ -14,16 +22,10 @@ final class CastTableViewCell: UITableViewCell {
         return view
     }()
 
-    // MARK: - Private Properties
-
-    private var cast: [Cast] = []
-    private let cellIdintifier = "ActorCell"
-
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCell()
     }
 
     @available(*, unavailable)
@@ -31,12 +33,15 @@ final class CastTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Private Methods
+    // MARK: - Public methods
 
-    private func setupCell() {
+    func setupCell(filmID: Int) {
+        id = filmID
         createCollectionView()
-        fetchDetailData()
+        fetchDetailData(filmID: id ?? 0)
     }
+
+    // MARK: - Private Methods
 
     private func createCollectionView() {
         let layout = UICollectionViewFlowLayout()
@@ -76,13 +81,16 @@ final class CastTableViewCell: UITableViewCell {
         )
     }
 
-    private func fetchDetailData() {
-        let movieURL = NetWorkManager.getMovieURl(urlMovieType: .cast, id: MovieDetailViewController.id)
-
-        NetWorkManager.fetchCastData(url: movieURL) { [weak self] cast in
-            self?.cast = cast
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
+    private func fetchDetailData(filmID: Int) {
+        movieAPIService.fetchCastData(filmID: filmID) { [weak self] result in
+            switch result {
+            case let .failure(.jsonSerializationError(error)):
+                print(error.localizedDescription)
+            case let .success(cast):
+                self?.cast = cast
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             }
         }
     }

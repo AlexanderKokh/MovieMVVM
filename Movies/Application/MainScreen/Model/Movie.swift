@@ -4,10 +4,10 @@
 import Foundation
 
 /// UI Data Driven
-enum ViewData {
+enum ViewData<Model> {
     case loading
-    case loaded([Movie])
-    case failure(description: String?, onReload: () -> ())
+    case loaded([Model])
+    case failure(description: String?)
 }
 
 /// Модель  списка  фильмов
