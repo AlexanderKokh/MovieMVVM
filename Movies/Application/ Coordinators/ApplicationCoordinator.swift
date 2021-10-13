@@ -4,6 +4,12 @@
 import Foundation
 
 final class ApplicationCoordinator: BaseCoordinator {
+    var assembly: AssemblyProtocol?
+
+    init(assembly: AssemblyProtocol) {
+        self.assembly = assembly
+    }
+
     // MARK: - ApplicationCoordinator
 
     override func start() {
@@ -13,9 +19,11 @@ final class ApplicationCoordinator: BaseCoordinator {
     // MARK: - Private methods
 
     private func toMain() {
-        let coordinator = MainCoordinator()
+        guard let assembly = assembly else { fatalError() }
 
-        coordinator.onFinishFlow = { [weak self, weak coordinator] in
+        let coordinator = MainCoordinator(assembly: assembly)
+
+        coordinator.onFinishFlow = { [weak self] in
             self?.removeDependency(coordinator)
             self?.start()
         }

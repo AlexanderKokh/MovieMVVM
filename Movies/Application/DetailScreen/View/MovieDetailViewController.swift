@@ -49,6 +49,13 @@ final class MovieDetailViewController: UIViewController {
         nav?.barStyle = .black
         nav?.tintColor = .white
         nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
+
+        navigationController?.navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: "titleLabel",
+            style: .plain,
+            target: nil,
+            action: nil
+        )
     }
 
     override func viewWillDisappear(_ animated: Bool) {

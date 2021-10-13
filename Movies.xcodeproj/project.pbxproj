@@ -194,13 +194,13 @@
 		FC68AD7026B18C2500BC6CCB /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				FCAB36D826AF0A5B009B7F83 /* AppDelegate.swift */,
+				FCAB36DA26AF0A5B009B7F83 /* SceneDelegate.swift */,
+				FC6288CF27174F0E003E4696 /* Assembly.swift */,
 				FC6288C327173863003E4696 /*  Coordinators */,
 				FC6052352715EAFE00155128 /* ServiceLayer */,
 				FC60522B2715DECF00155128 /* DetailScreen */,
 				FCA976ED271476BD00E2FB98 /* MainScreen */,
-				FCAB36D826AF0A5B009B7F83 /* AppDelegate.swift */,
-				FCAB36DA26AF0A5B009B7F83 /* SceneDelegate.swift */,
-				FC6288CF27174F0E003E4696 /* Assembly.swift */,
 				FCAB36DE26AF0A5B009B7F83 /* Main.storyboard */,
 				FCAB36E126AF0A5C009B7F83 /* Assets.xcassets */,
 				FCAB36E326AF0A5C009B7F83 /* LaunchScreen.storyboard */,

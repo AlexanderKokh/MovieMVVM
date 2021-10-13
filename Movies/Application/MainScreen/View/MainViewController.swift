@@ -3,8 +3,10 @@
 
 import UIKit
 
+typealias IntStringHandler = (Int, String) -> Void
+
 final class MovieViewController: UIViewController {
-    var toDetailScreen: VoidHandler?
+    var toDetailScreen: IntStringHandler?
 
     // MARK: - Private Properties
 
@@ -53,6 +55,7 @@ final class MovieViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        navigationController?.navigationBar.isHidden = true
     }
 
     // MARK: - IBAction
@@ -179,18 +182,9 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            let assembly = Assembly()
-            let vc = assembly.createMovieDetailModule(movieID: data[indexPath.row].id ?? 1)
+            guard let movieID = data[indexPath.row].id else { return }
             let titleLabel = Constants.backBarTitle
-            vc.title = data[indexPath.row].title
-
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(
-                title: titleLabel,
-                style: .plain,
-                target: nil,
-                action: nil
-            )
-            self.navigationController?.pushViewController(vc, animated: true)
+            toDetailScreen?(movieID, titleLabel)
         }
     }
 
