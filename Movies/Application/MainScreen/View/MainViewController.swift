@@ -4,6 +4,8 @@
 import UIKit
 
 final class MovieViewController: UIViewController {
+    var toDetailScreen: VoidHandler?
+
     // MARK: - Private Properties
 
     private enum Constants {
@@ -179,6 +181,8 @@ extension MovieViewController: UITableViewDelegate {
         if case let .loaded(data) = props {
             let movieAPIService = MovieAPIService()
             let viewModel = MovieDetailViewModel(movieAPIService: movieAPIService)
+
+            toDetailScreen?()
             let vc = MovieDetailViewController(
                 viewModel: viewModel,
                 id: data[indexPath.row].id ?? 1
