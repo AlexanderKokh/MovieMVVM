@@ -11,8 +11,11 @@ protocol MainScreenViewModelProtocol {
 final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: - Public Properties
 
-    private var movieAPIService: MovieAPIServiceProtocol?
     var updateViewData: ((ViewData<Movie>) -> ())?
+
+    // MARK: - Private Properties
+
+    private var movieAPIService: MovieAPIServiceProtocol?
 
     // MARK: - Initializers
 

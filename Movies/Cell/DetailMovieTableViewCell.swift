@@ -4,7 +4,11 @@
 import UIKit
 
 final class DetailMovieTableViewCell: UITableViewCell {
-    // MARK: - Visual Components
+    // MARK: - Public Properties
+
+    var imdbID: String?
+
+    // MARK: - Private Properties
 
     private let movieImageView: UIImageView = {
         let view = UIImageView()
@@ -66,11 +70,6 @@ final class DetailMovieTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-    // MARK: - Public Properties
-
-    var imdbID: String?
-    private lazy var imageService = ImageAPIService()
 
     // MARK: - Initializers
 

@@ -4,7 +4,7 @@
 import UIKit
 
 final class CastCollectionViewCell: UICollectionViewCell {
-    // MARK: - Visual Components
+    // MARK: - Private Properties
 
     private let actorImageView: UIImageView = {
         let view = UIImageView()

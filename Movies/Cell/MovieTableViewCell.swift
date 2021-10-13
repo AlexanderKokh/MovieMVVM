@@ -4,7 +4,11 @@
 import UIKit
 
 final class MovieTableViewCell: UITableViewCell {
-    // MARK: - Visual Components
+    // MARK: - Public Properties
+
+    var id: Int?
+
+    // MARK: - Private Properties
 
     private let movieImageView: UIImageView = {
         let view = UIImageView()
@@ -46,10 +50,6 @@ final class MovieTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-    // MARK: - Public Properties
-
-    var id: Int?
 
     // MARK: - Initializers
 

@@ -185,7 +185,6 @@ extension MovieViewController: UITableViewDelegate {
             )
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
-            // vc.id = data[indexPath.row].id ?? 1
 
             self.navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: titleLabel,

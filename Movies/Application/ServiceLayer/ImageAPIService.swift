@@ -16,8 +16,12 @@ protocol ImageAPIServiceProtocol {
 }
 
 final class ImageAPIService: ImageAPIServiceProtocol {
+    // MARK: - Private Properties
+
     private let imageURLw500 = "https://image.tmdb.org/t/p/w500/"
     private var session = URLSession.shared
+
+    // MARK: - Public methods
 
     func loadImage(url: String, handler: @escaping HandlerImage) {
         if let url = URL(string: imageURLw500 + url) {

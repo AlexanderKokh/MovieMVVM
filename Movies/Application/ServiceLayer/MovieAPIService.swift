@@ -2,6 +2,12 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
+typealias HandlerMovie = (Result<[Movie], DownLoaderError>) -> ()
+typealias HandlerMovieDetail = (Result<MovieDetail, DownLoaderError>) -> ()
+typealias HandlerCast = (Result<[Cast], DownLoaderError>) -> ()
+
+/// Тип запроса на получение фильма из  интернета
 enum URLList: String {
     case topRate = "top_rated"
     case popular
@@ -14,10 +20,6 @@ enum DownLoaderError: Error {
     case jsonSerializationError(Error)
 }
 
-typealias HandlerMovie = (Result<[Movie], DownLoaderError>) -> ()
-typealias HandlerMovieDetail = (Result<MovieDetail, DownLoaderError>) -> ()
-typealias HandlerCast = (Result<[Cast], DownLoaderError>) -> ()
-
 protocol MovieAPIServiceProtocol {
     func fetchDataDetail(filmID: Int, compleation: @escaping (HandlerMovieDetail))
     func fetchData(groupID: Int, compleation: @escaping (HandlerMovie))
@@ -25,6 +27,8 @@ protocol MovieAPIServiceProtocol {
 }
 
 final class MovieAPIService: MovieAPIServiceProtocol {
+    // MARK: - Private Properties
+
     private let errorSerialiaztion = "Error serialization json"
 
     // MARK: - Public methods

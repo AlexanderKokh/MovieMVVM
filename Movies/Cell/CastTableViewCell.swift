@@ -4,7 +4,7 @@
 import UIKit
 
 final class CastTableViewCell: UITableViewCell {
-    // MARK: - Visual Components
+    // MARK: - Private Properties
 
     private enum Constants {
         static let cellIdintifier = "ActorCell"
@@ -12,18 +12,15 @@ final class CastTableViewCell: UITableViewCell {
 
     private var collectionView: UICollectionView!
     private var id: Int?
+    private var cast: [Cast] = []
+    private let cellIdintifier = Constants.cellIdintifier
+    private lazy var movieAPIService = MovieAPIService()
 
     private let backGroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-    // MARK: - Private Properties
-
-    private var cast: [Cast] = []
-    private let cellIdintifier = Constants.cellIdintifier
-    private lazy var movieAPIService = MovieAPIService()
 
     // MARK: - Initializers
 
@@ -36,13 +33,15 @@ final class CastTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Private Methods
+    // MARK: - Public methods
 
     func setupCell(filmID: Int) {
         id = filmID
         createCollectionView()
         fetchDetailData(filmID: id ?? 0)
     }
+
+    // MARK: - Private Methods
 
     private func createCollectionView() {
         let layout = UICollectionViewFlowLayout()

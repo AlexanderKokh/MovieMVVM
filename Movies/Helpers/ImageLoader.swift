@@ -5,7 +5,12 @@ import UIKit
 
 /// Загрузка изображений
 struct ImageLoader {
+    // MARK: - Initializers
+
     private init() {}
+
+    // MARK: - Public methods
+
     static func loadImage(path: String?, imageView: UIImageView?) {
         let imageService = ImageAPIService()
 

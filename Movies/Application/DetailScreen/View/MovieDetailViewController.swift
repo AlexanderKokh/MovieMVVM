@@ -4,7 +4,7 @@
 import UIKit
 
 final class MovieDetailViewController: UIViewController {
-    // MARK: - Visual Components
+    // MARK: - Private Properties
 
     private enum Constants {
         static let detailCellIdentifier = "DetailCell"
@@ -37,17 +37,17 @@ final class MovieDetailViewController: UIViewController {
 
     // MARK: - UIViewController
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
         let nav = navigationController?.navigationBar
         nav?.barStyle = .black
         nav?.tintColor = .white
         nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

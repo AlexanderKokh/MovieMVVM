@@ -14,16 +14,24 @@ protocol MovieDetailViewModelProtocol {
 }
 
 final class MovieDetailViewModel: MovieDetailViewModelProtocol {
+    // MARK: - Public Properties
+
     var updateViewData: (() -> ())?
     var showError: VoidHandler?
     var movieDetail: MovieDetail?
     var error: String?
 
+    // MARK: - Private Properties
+
     private var movieAPIService: MovieAPIServiceProtocol?
+
+    // MARK: - Initializers
 
     init(movieAPIService: MovieAPIServiceProtocol) {
         self.movieAPIService = movieAPIService
     }
+
+    // MARK: - Public methods
 
     func getData(filmID: Int) {
         fetchDetailData(filmID: filmID)
