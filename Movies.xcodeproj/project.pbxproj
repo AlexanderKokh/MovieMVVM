@@ -19,6 +19,7 @@
 		FC6288C527173AC8003E4696 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6288C427173AC8003E4696 /* ApplicationCoordinator.swift */; };
 		FC6288C827173B07003E4696 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6288C727173B07003E4696 /* BaseCoordinator.swift */; };
 		FC6288CB27173DD4003E4696 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6288CA27173DD4003E4696 /* MainCoordinator.swift */; };
+		FC6288D027174F0E003E4696 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6288CF27174F0E003E4696 /* Assembly.swift */; };
 		FC64E63826B3FFFA00200535 /* MovieAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC64E63726B3FFFA00200535 /* MovieAPIService.swift */; };
 		FC659A722714F46D0013AA48 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC659A712714F46D0013AA48 /* UIViewController + Extension.swift */; };
 		FC6657B026B2027400D7D5C2 /* DetailMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */; };
@@ -50,6 +51,7 @@
 		FC6288C427173AC8003E4696 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		FC6288C727173B07003E4696 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		FC6288CA27173DD4003E4696 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		FC6288CF27174F0E003E4696 /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 		FC64E63726B3FFFA00200535 /* MovieAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPIService.swift; sourceTree = "<group>"; };
 		FC659A712714F46D0013AA48 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		FC6657AF26B2027400D7D5C2 /* DetailMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovie.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				FCA976ED271476BD00E2FB98 /* MainScreen */,
 				FCAB36D826AF0A5B009B7F83 /* AppDelegate.swift */,
 				FCAB36DA26AF0A5B009B7F83 /* SceneDelegate.swift */,
+				FC6288CF27174F0E003E4696 /* Assembly.swift */,
 				FCAB36DE26AF0A5B009B7F83 /* Main.storyboard */,
 				FCAB36E126AF0A5C009B7F83 /* Assets.xcassets */,
 				FCAB36E326AF0A5C009B7F83 /* LaunchScreen.storyboard */,
@@ -401,6 +404,7 @@
 				FC60524727160A1A00155128 /* UICollectionViewCell + Extension.swift in Sources */,
 				FC60524B27160B4100155128 /* ImageLoader.swift in Sources */,
 				FC68AD6726B144B400BC6CCB /* Movie.swift in Sources */,
+				FC6288D027174F0E003E4696 /* Assembly.swift in Sources */,
 				FCA976F3271477A900E2FB98 /* MainScreenViewModel.swift in Sources */,
 				FC83695726B4873E003B9018 /* WebViewController.swift in Sources */,
 				FC6657B326B2083000D7D5C2 /* DetailMovieTableViewCell.swift in Sources */,

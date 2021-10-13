@@ -179,14 +179,8 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            let movieAPIService = MovieAPIService()
-            let viewModel = MovieDetailViewModel(movieAPIService: movieAPIService)
-
-            toDetailScreen?()
-            let vc = MovieDetailViewController(
-                viewModel: viewModel,
-                id: data[indexPath.row].id ?? 1
-            )
+            let assembly = Assembly()
+            let vc = assembly.createMovieDetailModule(movieID: data[indexPath.row].id ?? 1)
             let titleLabel = Constants.backBarTitle
             vc.title = data[indexPath.row].title
 
