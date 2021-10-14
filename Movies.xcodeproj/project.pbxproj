@@ -33,6 +33,7 @@
 		FC6A0A942718D337006A8B0A /* FileManagerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A0A932718D337006A8B0A /* FileManagerServiceProtocol.swift */; };
 		FC6A0A982718D94A006A8B0A /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A0A972718D94A006A8B0A /* Proxy.swift */; };
 		FC6A0A9C2718DDBF006A8B0A /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A0A9B2718DDBF006A8B0A /* ImageService.swift */; };
+		FC6A0AA52718F777006A8B0A /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A0AA42718F777006A8B0A /* RealmRepository.swift */; };
 		FC83695426B447FC003B9018 /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC83695326B447FC003B9018 /* Host.swift */; };
 		FC83695726B4873E003B9018 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC83695626B4873E003B9018 /* WebViewController.swift */; };
 		FCA976F3271477A900E2FB98 /* MainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA976F2271477A900E2FB98 /* MainScreenViewModel.swift */; };
@@ -81,6 +82,7 @@
 		FC6A0A932718D337006A8B0A /* FileManagerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerServiceProtocol.swift; sourceTree = "<group>"; };
 		FC6A0A972718D94A006A8B0A /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		FC6A0A9B2718DDBF006A8B0A /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		FC6A0AA42718F777006A8B0A /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		FC83695326B447FC003B9018 /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
 		FC83695626B4873E003B9018 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FCA976F2271477A900E2FB98 /* MainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewModel.swift; sourceTree = "<group>"; };
@@ -151,9 +153,9 @@
 		FC6052352715EAFE00155128 /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
+				FC6A0AA32718F73B006A8B0A /* DataStorage */,
 				FC64E63726B3FFFA00200535 /* MovieAPIService.swift */,
 				FC6A0A922718D2EE006A8B0A /* ImageManager */,
-				FC6A0A8527184805006A8B0A /* Repository.swift */,
 			);
 			path = ServiceLayer;
 			sourceTree = "<group>";
@@ -250,6 +252,15 @@
 				FC6A0A932718D337006A8B0A /* FileManagerServiceProtocol.swift */,
 			);
 			path = ImageManager;
+			sourceTree = "<group>";
+		};
+		FC6A0AA32718F73B006A8B0A /* DataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				FC6A0A8527184805006A8B0A /* Repository.swift */,
+				FC6A0AA42718F777006A8B0A /* RealmRepository.swift */,
+			);
+			path = DataStorage;
 			sourceTree = "<group>";
 		};
 		FCA976ED271476BD00E2FB98 /* MainScreen */ = {
@@ -478,6 +489,7 @@
 				FC6A0A942718D337006A8B0A /* FileManagerServiceProtocol.swift in Sources */,
 				FC6052412715FF4000155128 /* URLSession + Extension.swift in Sources */,
 				FCAB36D926AF0A5B009B7F83 /* AppDelegate.swift in Sources */,
+				FC6A0AA52718F777006A8B0A /* RealmRepository.swift in Sources */,
 				FC5AE4EF26B2F497004DE349 /* Cast.swift in Sources */,
 				FC6657B026B2027400D7D5C2 /* DetailMovie.swift in Sources */,
 				FC83695426B447FC003B9018 /* Host.swift in Sources */,

@@ -1,33 +1,13 @@
-// Repository.swift
+// RealmRepository.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 import RealmSwift
 
-protocol RepositoryProtocol: AnyObject {
-    associatedtype Entity
-    func get(predicate: NSPredicate) -> [Entity]
-    func save(object: [Entity])
-    func removeAll()
-}
-
-///
-class Repository<DataBaseEntity>: RepositoryProtocol {
-    typealias Entity = DataBaseEntity
-
-    func get(predicate: NSPredicate) -> [Entity] {
-        fatalError("")
-    }
-
-    func save(object: [Entity]) {
-        fatalError("")
-    }
-
-    func removeAll() {}
-}
-
 final class RealmRepository<RealmEntity: Object>: Repository<RealmEntity> {
     typealias Entity = RealmEntity
+
+    // MARK: - RealmRepository
 
     override func save(object: [Entity]) {
         do {
@@ -45,12 +25,12 @@ final class RealmRepository<RealmEntity: Object>: Repository<RealmEntity> {
     override func get(predicate: NSPredicate) -> [Entity] {
         do {
             let realm = try Realm()
-            let rez = realm.objects(Entity.self).filter(predicate)
-            var mas: [Entity] = []
-            rez.forEach {
-                mas.append($0)
+            let realmObjects = realm.objects(Entity.self).filter(predicate)
+            var entityArray: [Entity] = []
+            realmObjects.forEach {
+                entityArray.append($0)
             }
-            return mas
+            return entityArray
         } catch {
             return []
         }

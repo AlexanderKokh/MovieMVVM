@@ -9,6 +9,8 @@ protocol FileManagerServiceProtocol {
 }
 
 final class FileManagerService: FileManagerServiceProtocol {
+    // MARK: - Private Properties
+
     private var images = [String: UIImage]()
     private let cacheLifeTime: TimeInterval = 30 * 24 * 60 * 60
     private static let pathname: String = {
@@ -23,6 +25,8 @@ final class FileManagerService: FileManagerServiceProtocol {
         }
         return pathName
     }()
+
+    // MARK: - Public methods
 
     func getImageFromCache(url: String) -> UIImage? {
         guard let fileName = getFilePath(url: url),
@@ -45,6 +49,8 @@ final class FileManagerService: FileManagerServiceProtocol {
               let data = image.pngData() else { return }
         FileManager.default.createFile(atPath: fileName, contents: data, attributes: nil)
     }
+
+    // MARK: - Private methods
 
     private func getFilePath(url: String) -> String? {
         guard let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first

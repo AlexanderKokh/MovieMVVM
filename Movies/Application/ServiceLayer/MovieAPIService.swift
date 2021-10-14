@@ -2,10 +2,6 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
-import RealmSwift
-
-typealias MovieDetailHandler = (Result<MovieDetail, DownLoaderError>) -> ()
-typealias CastHandler = (Result<[Cast], DownLoaderError>) -> ()
 
 /// Тип запроса на получение фильма из  интернета
 enum URLList: String {
@@ -22,7 +18,7 @@ enum DownLoaderError: Error {
 
 protocol MovieAPIServiceProtocol {
     func fetchDataDetail(filmID: Int, compleation: @escaping (Result<MovieDetailRealm, DownLoaderError>) -> ())
-    func fetchCastData(filmID: Int, compleation: @escaping (CastHandler))
+    func fetchCastData(filmID: Int, compleation: @escaping (Result<[Cast], DownLoaderError>) -> ())
     func fetchData(groupID: Int, compleation: @escaping ((Result<[MovieRealm], DownLoaderError>) -> ()))
 }
 
@@ -67,7 +63,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
         }.resume()
     }
 
-    func fetchCastData(filmID: Int, compleation: @escaping (CastHandler)) {
+    func fetchCastData(filmID: Int, compleation: @escaping (Result<[Cast], DownLoaderError>) -> ()) {
         let movieURL = getMovieURl(urlMovieType: .cast, id: filmID)
 
         guard let url = URL(string: movieURL) else { return }

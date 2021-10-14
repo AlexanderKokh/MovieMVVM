@@ -8,13 +8,19 @@ protocol LoadImageProtocol {
 }
 
 final class Proxy: LoadImageProtocol {
+    // MARK: - Private Properties
+
     private let imageAPIService: ImageAPIServiceProtocol
     private let fileManagerService: FileManagerServiceProtocol
+
+    // MARK: - Initializers
 
     init(imageAPIService: ImageAPIServiceProtocol, fileManagerService: FileManagerServiceProtocol) {
         self.imageAPIService = imageAPIService
         self.fileManagerService = fileManagerService
     }
+
+    // MARK: - Public methods
 
     func loadImage(url: URL, compleation: @escaping (Result<UIImage, Error>) -> Void) {
         let image = fileManagerService.getImageFromCache(url: url.absoluteString)
