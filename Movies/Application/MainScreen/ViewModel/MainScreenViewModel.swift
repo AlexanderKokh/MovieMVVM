@@ -20,8 +20,6 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     private var repository: Repository<MovieRealm>?
     private var movieAPIService: MovieAPIServiceProtocol?
 
-    var adfhsdjk = 0
-
     // MARK: - Initializers
 
     init(movieAPIService: MovieAPIServiceProtocol, repository: Repository<MovieRealm>?) {
@@ -33,10 +31,26 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: - Public methods
 
     func getData(groupID: Int) {
+        let filter = "\(groupID)"
+
+        let requestPredicate = NSPredicate(format: "category == %@", filter)
+
+        let casheMovie = repository?.get(predicate: requestPredicate)
+
+        if !(casheMovie?.isEmpty ?? true) {
+            guard let casheMovie = casheMovie else { return }
+            updateViewData?(.loaded(casheMovie))
+            return
+        }
+
         movieAPIService?.fetchData1(groupID: groupID) { [weak self] result in
             switch result {
             case let .success(movies):
                 DispatchQueue.main.async {
+                    movies.forEach {
+                        $0.category = String(groupID)
+                        $0.keyField = "Category:\(groupID) id: \($0.id)"
+                    }
                     self?.repository?.save(object: movies)
                     self?.updateViewData?(.loaded(movies))
                 }

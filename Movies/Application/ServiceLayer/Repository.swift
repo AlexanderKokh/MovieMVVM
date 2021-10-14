@@ -6,25 +6,20 @@ import RealmSwift
 
 protocol RepositoryProtocol: AnyObject {
     associatedtype Entity
-    func get(predicate: NSPredicate) -> [Entity]?
+    func get(predicate: NSPredicate) -> [Entity]
     func save(object: [Entity])
     func removeAll()
-    func createPredicate(movieID: String) -> NSPredicate
 }
 
 ///
 class Repository<DataBaseEntity>: RepositoryProtocol {
     typealias Entity = DataBaseEntity
 
-    func get(predicate: NSPredicate) -> [Entity]? {
+    func get(predicate: NSPredicate) -> [Entity] {
         fatalError("")
     }
 
-    func save(object: [DataBaseEntity]) {
-        fatalError("")
-    }
-
-    func createPredicate(movieID: String) -> NSPredicate {
+    func save(object: [Entity]) {
         fatalError("")
     }
 
@@ -40,10 +35,24 @@ final class RealmRepository<RealmEntity: Object>: Repository<RealmEntity> {
             let realm = try Realm(configuration: config)
 
             try realm.write {
-                realm.add(object)
+                realm.add(object, update: .all)
             }
         } catch {
             print(error)
+        }
+    }
+
+    override func get(predicate: NSPredicate) -> [Entity] {
+        do {
+            let realm = try Realm()
+            let rez = realm.objects(Entity.self).filter(predicate)
+            var mas: [Entity] = []
+            rez.forEach {
+                mas.append($0)
+            }
+            return mas
+        } catch {
+            return []
         }
     }
 }

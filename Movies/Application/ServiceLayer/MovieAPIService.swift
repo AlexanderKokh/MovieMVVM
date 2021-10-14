@@ -4,7 +4,7 @@
 import Foundation
 import RealmSwift
 
-typealias MovieHandler = (Result<[Movie], DownLoaderError>) -> ()
+// typealias MovieHandler = (Result<[Movie], DownLoaderError>) -> ()
 typealias MovieDetailHandler = (Result<MovieDetail, DownLoaderError>) -> ()
 typealias CastHandler = (Result<[Cast], DownLoaderError>) -> ()
 
