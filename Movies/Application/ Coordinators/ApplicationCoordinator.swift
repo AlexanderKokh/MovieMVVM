@@ -1,13 +1,16 @@
 // ApplicationCoordinator.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
+import UIKit
 
 final class ApplicationCoordinator: BaseCoordinator {
-    var assembly: AssemblyProtocol?
+    var assembly: AssemblyProtocol!
+    var navController: UINavigationController?
 
-    init(assembly: AssemblyProtocol) {
+    required init(assembly: AssemblyProtocol, navController: UINavigationController? = nil) {
         self.assembly = assembly
+        self.navController = navController
+        super.init(assembly: assembly, navController: navController)
     }
 
     // MARK: - ApplicationCoordinator
@@ -21,7 +24,7 @@ final class ApplicationCoordinator: BaseCoordinator {
     private func toMain() {
         guard let assembly = assembly else { fatalError() }
 
-        let coordinator = MainCoordinator(assembly: assembly)
+        let coordinator = MainCoordinator(assembly: assembly, navController: navController)
 
         coordinator.onFinishFlow = { [weak self] in
             self?.removeDependency(coordinator)

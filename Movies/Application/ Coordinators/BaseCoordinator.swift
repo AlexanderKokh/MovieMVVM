@@ -9,6 +9,8 @@ class BaseCoordinator {
 
     var childCoordinators: [BaseCoordinator] = []
 
+    required init(assembly: AssemblyProtocol, navController: UINavigationController? = nil) {}
+
     // MARK: - Public methods
 
     func start() {}

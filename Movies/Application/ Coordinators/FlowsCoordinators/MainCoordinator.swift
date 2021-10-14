@@ -4,12 +4,14 @@
 import UIKit
 
 final class MainCoordinator: BaseCoordinator {
-    var rootController: UINavigationController?
     var onFinishFlow: VoidHandler?
-    var assembly: AssemblyProtocol?
+    var assembly: AssemblyProtocol!
+    var navController: UINavigationController?
 
-    init(assembly: AssemblyProtocol) {
+    required init(assembly: AssemblyProtocol, navController: UINavigationController? = nil) {
         self.assembly = assembly
+        self.navController = navController
+        super.init(assembly: assembly, navController: navController)
     }
 
     override func start() {
@@ -23,16 +25,20 @@ final class MainCoordinator: BaseCoordinator {
             self?.showDetailViewController(movieID: movieID, titleVC: titleVC)
         }
 
-        rootController = UINavigationController(rootViewController: controller)
-
-        guard let rootController = rootController else { return }
-        setAsRoot(rootController)
+        if navController == nil {
+            let navController = UINavigationController(rootViewController: controller)
+            self.navController = navController
+            setAsRoot(navController)
+        } else if let navController = navController {
+            navController.pushViewController(controller, animated: true)
+            setAsRoot(navController)
+        }
     }
 
     private func showDetailViewController(movieID: Int, titleVC: String) {
         guard let controller = assembly?.createMovieDetailModule(movieID: movieID) as? MovieDetailViewController
         else { fatalError() }
         controller.title = titleVC
-        rootController?.pushViewController(controller, animated: true)
+        navController?.pushViewController(controller, animated: true)
     }
 }
