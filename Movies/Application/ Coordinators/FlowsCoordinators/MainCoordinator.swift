@@ -7,7 +7,7 @@ final class MainCoordinator: BaseCoordinator {
     // MARK: - Public Properties
 
     var onFinishFlow: VoidHandler?
-    var assembly: AssemblyProtocol!
+    var assembly: AssemblyProtocol?
     var navController: UINavigationController?
 
     // MARK: - Initializers

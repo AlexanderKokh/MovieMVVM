@@ -25,7 +25,7 @@ class BaseCoordinator {
     }
 
     func removeDependency(_ coordinator: BaseCoordinator?) {
-        guard childCoordinators.isEmpty == false,
+        guard !childCoordinators.isEmpty,
               let coordinator = coordinator
         else { return }
         for (index, element) in childCoordinators.reversed().enumerated() where element === coordinator {
