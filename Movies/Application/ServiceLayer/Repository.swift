@@ -2,41 +2,48 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
-protocol RepositoryProtocol {
-    func save<Model>(object: [Model], movieType: Int?, id: Int?)
-    func get<Model>(movieType: Int?, id: Int?) -> [Model]?
+protocol RepositoryProtocol: AnyObject {
+    associatedtype Entity
+    func get(predicate: NSPredicate) -> [Entity]?
+    func save(object: [Entity])
     func removeAll()
+    func createPredicate(movieID: String) -> NSPredicate
 }
 
-final class Repository: RepositoryProtocol {
-    private var database: RepositoryProtocol?
+///
+class Repository<DataBaseEntity>: RepositoryProtocol {
+    typealias Entity = DataBaseEntity
 
-    init(database: RepositoryProtocol) {
-        self.database = database
+    func get(predicate: NSPredicate) -> [Entity]? {
+        fatalError("")
     }
 
-    func save<Model>(object: [Model], movieType: Int?, id: Int?) {
-        database?.save(object: object, movieType: movieType, id: id)
+    func save(object: [DataBaseEntity]) {
+        fatalError("")
     }
 
-    func get<Model>(movieType: Int?, id: Int?) -> [Model]? {
-        database?.get(movieType: movieType, id: id)
-    }
-
-    func removeAll() {
-        database?.removeAll()
-    }
-}
-
-final class RealmService: RepositoryProtocol {
-    func save<Model>(object: [Model], movieType: Int?, id: Int?) {
-        print(0)
-    }
-
-    func get<Model>(movieType: Int?, id: Int?) -> [Model]? {
-        nil
+    func createPredicate(movieID: String) -> NSPredicate {
+        fatalError("")
     }
 
     func removeAll() {}
+}
+
+final class RealmRepository<RealmEntity: Object>: Repository<RealmEntity> {
+    typealias Entity = RealmEntity
+
+    override func save(object: [Entity]) {
+        do {
+            let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+            let realm = try Realm(configuration: config)
+
+            try realm.write {
+                realm.add(object)
+            }
+        } catch {
+            print(error)
+        }
+    }
 }

@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
 typealias MovieHandler = (Result<[Movie], DownLoaderError>) -> ()
 typealias MovieDetailHandler = (Result<MovieDetail, DownLoaderError>) -> ()
@@ -22,8 +23,9 @@ enum DownLoaderError: Error {
 
 protocol MovieAPIServiceProtocol {
     func fetchDataDetail(filmID: Int, compleation: @escaping (MovieDetailHandler))
-    func fetchData(groupID: Int, compleation: @escaping (MovieHandler))
+    // func fetchData(groupID: Int, compleation: @escaping (MovieHandler))
     func fetchCastData(filmID: Int, compleation: @escaping (CastHandler))
+    func fetchData1(groupID: Int, compleation: @escaping ((Result<[MovieRealm], DownLoaderError>) -> ()))
 }
 
 final class MovieAPIService: MovieAPIServiceProtocol {
@@ -33,7 +35,24 @@ final class MovieAPIService: MovieAPIServiceProtocol {
 
     // MARK: - Public methods
 
-    func fetchData(groupID: Int, compleation: @escaping (MovieHandler)) {
+//    func fetchData(groupID: Int, compleation: @escaping (MovieHandler)) {
+//        let movieURL = getURL(groupId: groupID)
+//        guard let url = URL(string: movieURL) else { return }
+//        URLSession.shared.dataTask(with: url) { data, _, error in
+//            guard let data = data else { return }
+//            do {
+//                let decoder = JSONDecoder()
+//                decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                let incomingJson = try decoder.decode(IncomingJson.self, from: data)
+//                let movies = incomingJson.results
+//                compleation(.success(movies))
+//            } catch {
+//                compleation(.failure(.jsonSerializationError(error)))
+//            }
+//        }.resume()
+//    }
+
+    func fetchData1(groupID: Int, compleation: @escaping ((Result<[MovieRealm], DownLoaderError>) -> ())) {
         let movieURL = getURL(groupId: groupID)
         guard let url = URL(string: movieURL) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -42,8 +61,7 @@ final class MovieAPIService: MovieAPIServiceProtocol {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let incomingJson = try decoder.decode(IncomingJson.self, from: data)
-                let movies = incomingJson.results
-                compleation(.success(movies))
+                compleation(.success(incomingJson.results))
             } catch {
                 compleation(.failure(.jsonSerializationError(error)))
             }

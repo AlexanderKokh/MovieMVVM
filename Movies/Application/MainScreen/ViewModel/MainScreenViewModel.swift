@@ -2,25 +2,29 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
 protocol MainScreenViewModelProtocol {
-    var updateViewData: ((ViewData<Movie>) -> ())? { get set }
+    var updateViewData: ((ViewData<MovieRealm>) -> ())? { get set }
+
     func getData(groupID: Int)
 }
 
 final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: - Public Properties
 
-    var updateViewData: ((ViewData<Movie>) -> ())?
+    var updateViewData: ((ViewData<MovieRealm>) -> ())?
 
     // MARK: - Private Properties
 
-    private var repository: RepositoryProtocol?
+    private var repository: Repository<MovieRealm>?
     private var movieAPIService: MovieAPIServiceProtocol?
+
+    var adfhsdjk = 0
 
     // MARK: - Initializers
 
-    init(movieAPIService: MovieAPIServiceProtocol, repository: RepositoryProtocol) {
+    init(movieAPIService: MovieAPIServiceProtocol, repository: Repository<MovieRealm>?) {
         self.movieAPIService = movieAPIService
         self.repository = repository
         updateViewData?(.loading)
@@ -29,12 +33,15 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: - Public methods
 
     func getData(groupID: Int) {
-        movieAPIService?.fetchData(groupID: groupID) { [weak self] result in
+        movieAPIService?.fetchData1(groupID: groupID) { [weak self] result in
             switch result {
             case let .success(movies):
-                self?.updateViewData?(.loaded(movies))
+                DispatchQueue.main.async {
+                    self?.repository?.save(object: movies)
+                    self?.updateViewData?(.loaded(movies))
+                }
             case let .failure(.jsonSerializationError(error)):
-                self?.updateViewData?(.failure(description: error.localizedDescription))
+                print(error)
             }
         }
     }

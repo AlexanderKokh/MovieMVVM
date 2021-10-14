@@ -28,7 +28,7 @@ final class MovieViewController: UIViewController {
     private var tableView: UITableView?
     private var viewModel: MainScreenViewModelProtocol?
     private var activityIndicator: UIActivityIndicatorView?
-    private var props: ViewData<Movie> = .loading {
+    private var props: ViewData<MovieRealm> = .loading {
         didSet {
             switch props {
             case .loading:
@@ -184,8 +184,8 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            guard let movieID = data[indexPath.row].id else { return }
-
+            // guard let movieID = data[indexPath.row].id else { return }
+            let movieID = data[indexPath.row].id
             navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: Constants.backBarTitle,
                 style: .plain,
