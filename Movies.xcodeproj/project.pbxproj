@@ -200,7 +200,6 @@
 		FC68AD5E26B12CCA00BC6CCB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				FC68AD5F26B12CF800BC6CCB /* MovieTableViewCell.swift */,
 				FC6657B226B2083000D7D5C2 /* DetailMovieTableViewCell.swift */,
 				FC5AE4EB26B2EB46004DE349 /* CastTableViewCell.swift */,
 				FC5AE4F126B2FB0C004DE349 /* CastCollectionViewCell.swift */,
@@ -275,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				FCAB36DC26AF0A5B009B7F83 /* MainViewController.swift */,
+				FC68AD5F26B12CF800BC6CCB /* MovieTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

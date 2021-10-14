@@ -3,6 +3,8 @@
 
 import UIKit
 
+protocol TableViewCellDelegate: AnyObject {}
+
 final class MovieTableViewCell: UITableViewCell {
     // MARK: - Public Properties
 
