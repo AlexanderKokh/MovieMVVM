@@ -89,22 +89,21 @@ final class DetailMovieTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(movie: MovieDetail) {
+    func configureCell(movie: MovieDetailRealm) {
         loadImage(path: movie.backdropPath, imageView: movieBackGroundImageView)
 
         var moviedescription = "*"
         if let movieDate = movie.releaseDate {
             moviedescription += " \(movieDate.prefix(4)) *"
         }
-        if let genres = movie.genres {
-            for element in genres {
-                moviedescription += " \(element.name ?? "")/ "
-            }
-            moviedescription += " *"
-        }
-        if let runtime = movie.runtime {
-            moviedescription += " \(runtime) мин. *"
-        }
+//        if let genres = movie.genres {
+//            for element in genres {
+//                moviedescription += " \(element.name ?? "")/ "
+//            }
+//            moviedescription += " *"
+//        }
+
+        moviedescription += " \(movie.runtime) мин. *"
         movieParametrsLabel.text = moviedescription
 
         if let detaildescription = movie.overview {

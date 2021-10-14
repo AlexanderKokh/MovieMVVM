@@ -70,17 +70,9 @@ final class MovieTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configureCell(movie: MovieRealm) {
-        // if let description = movie.overview {
         movieShortDescription.text = movie.overview
-        // }
-
-        // if let title = movie.title {
         movieTitleLabel.text = movie.title
-        // }
-
-        // if let rateLabel = movie.voteAverage {
         movieRatelabel.text = String(movie.voteAverage)
-        // }
 
         id = movie.id
 

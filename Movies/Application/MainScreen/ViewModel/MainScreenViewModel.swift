@@ -6,7 +6,6 @@ import RealmSwift
 
 protocol MainScreenViewModelProtocol {
     var updateViewData: ((ViewData<MovieRealm>) -> ())? { get set }
-
     func getData(groupID: Int)
 }
 
@@ -43,7 +42,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
             return
         }
 
-        movieAPIService?.fetchData1(groupID: groupID) { [weak self] result in
+        movieAPIService?.fetchData(groupID: groupID) { [weak self] result in
             switch result {
             case let .success(movies):
                 DispatchQueue.main.async {

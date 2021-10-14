@@ -184,7 +184,6 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            // guard let movieID = data[indexPath.row].id else { return }
             let movieID = data[indexPath.row].id
             navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: Constants.backBarTitle,
