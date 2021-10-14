@@ -5,6 +5,6 @@ import UIKit
 
 extension UICollectionViewCell {
     func loadImage(path: String?, imageView: UIImageView?) {
-        ImageLoader.loadImage(path: path, imageView: imageView)
+        // ImageLoader.loadImage(path: path, imageView: imageView)
     }
 }

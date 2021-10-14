@@ -54,7 +54,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
                     self?.updateViewData?(.loaded(movies))
                 }
             case let .failure(.jsonSerializationError(error)):
-                print(error)
+                self?.updateViewData?(.failure(description: error.localizedDescription))
             }
         }
     }
