@@ -15,12 +15,14 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
 
     // MARK: - Private Properties
 
+    private var repository: RepositoryProtocol?
     private var movieAPIService: MovieAPIServiceProtocol?
 
     // MARK: - Initializers
 
-    init(movieAPIService: MovieAPIServiceProtocol) {
+    init(movieAPIService: MovieAPIServiceProtocol, repository: RepositoryProtocol) {
         self.movieAPIService = movieAPIService
+        self.repository = repository
         updateViewData?(.loading)
     }
 
