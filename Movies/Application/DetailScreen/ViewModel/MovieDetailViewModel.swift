@@ -16,7 +16,7 @@ protocol MovieDetailViewModelProtocol {
 final class MovieDetailViewModel: MovieDetailViewModelProtocol {
     // MARK: - Public Properties
 
-    var updateViewData: (() -> ())?
+    var updateViewData: VoidHandler?
     var showError: VoidHandler?
     var movieDetail: MovieDetail?
     var error: String?

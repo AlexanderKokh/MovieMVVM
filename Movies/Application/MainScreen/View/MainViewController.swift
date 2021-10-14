@@ -3,7 +3,13 @@
 
 import UIKit
 
+typealias IntStringHandler = (Int, String) -> Void
+
 final class MovieViewController: UIViewController {
+    // MARK: - Public Properties
+
+    var toDetailScreen: IntStringHandler?
+
     // MARK: - Private Properties
 
     private enum Constants {
@@ -51,6 +57,7 @@ final class MovieViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        navigationController?.navigationBar.isHidden = true
     }
 
     // MARK: - IBAction
@@ -177,22 +184,16 @@ final class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
-            let movieAPIService = MovieAPIService()
-            let viewModel = MovieDetailViewModel(movieAPIService: movieAPIService)
-            let vc = MovieDetailViewController(
-                viewModel: viewModel,
-                id: data[indexPath.row].id ?? 1
-            )
-            let titleLabel = Constants.backBarTitle
-            vc.title = data[indexPath.row].title
+            guard let movieID = data[indexPath.row].id else { return }
 
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(
-                title: titleLabel,
+            navigationItem.backBarButtonItem = UIBarButtonItem(
+                title: Constants.backBarTitle,
                 style: .plain,
                 target: nil,
                 action: nil
             )
-            self.navigationController?.pushViewController(vc, animated: true)
+
+            toDetailScreen?(movieID, data[indexPath.row].title ?? "")
         }
     }
 
