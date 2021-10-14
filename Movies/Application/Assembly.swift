@@ -9,6 +9,8 @@ protocol AssemblyProtocol {
 }
 
 final class Assembly: AssemblyProtocol {
+    // MARK: - Private methods
+
     func createMovieModule() -> UIViewController {
         let movieAPIService = MovieAPIService()
         let viewModel = MainScreenViewModel(movieAPIService: movieAPIService)

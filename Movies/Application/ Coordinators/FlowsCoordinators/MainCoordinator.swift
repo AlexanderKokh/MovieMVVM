@@ -4,9 +4,13 @@
 import UIKit
 
 final class MainCoordinator: BaseCoordinator {
+    // MARK: - Public Properties
+
     var onFinishFlow: VoidHandler?
     var assembly: AssemblyProtocol!
     var navController: UINavigationController?
+
+    // MARK: - Initializers
 
     required init(assembly: AssemblyProtocol, navController: UINavigationController? = nil) {
         self.assembly = assembly
@@ -14,9 +18,13 @@ final class MainCoordinator: BaseCoordinator {
         super.init(assembly: assembly, navController: navController)
     }
 
+    // MARK: - MainCoordinator
+
     override func start() {
         showMainScreen()
     }
+
+    // MARK: - Private methods
 
     private func showMainScreen() {
         guard let controller = assembly?.createMovieModule() as? MovieViewController else { fatalError() }

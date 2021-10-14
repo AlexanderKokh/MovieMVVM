@@ -6,6 +6,8 @@ import UIKit
 typealias IntStringHandler = (Int, String) -> Void
 
 final class MovieViewController: UIViewController {
+    // MARK: - Public Properties
+
     var toDetailScreen: IntStringHandler?
 
     // MARK: - Private Properties
@@ -183,8 +185,15 @@ extension MovieViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case let .loaded(data) = props {
             guard let movieID = data[indexPath.row].id else { return }
-            let titleLabel = Constants.backBarTitle
-            toDetailScreen?(movieID, titleLabel)
+
+            navigationItem.backBarButtonItem = UIBarButtonItem(
+                title: Constants.backBarTitle,
+                style: .plain,
+                target: nil,
+                action: nil
+            )
+
+            toDetailScreen?(movieID, data[indexPath.row].title ?? "")
         }
     }
 

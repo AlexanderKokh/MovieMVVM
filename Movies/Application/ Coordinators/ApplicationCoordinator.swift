@@ -4,8 +4,12 @@
 import UIKit
 
 final class ApplicationCoordinator: BaseCoordinator {
+    // MARK: - Public Properties
+
     var assembly: AssemblyProtocol!
     var navController: UINavigationController?
+
+    // MARK: - Initializers
 
     required init(assembly: AssemblyProtocol, navController: UINavigationController? = nil) {
         self.assembly = assembly
