@@ -2,7 +2,6 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
-import RealmSwift
 
 protocol MainScreenViewModelProtocol {
     var updateViewData: ((ViewData<MovieRealm>) -> ())? { get set }
@@ -21,7 +20,10 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
 
     // MARK: - Initializers
 
-    init(movieAPIService: MovieAPIServiceProtocol, repository: Repository<MovieRealm>?) {
+    init(
+        movieAPIService: MovieAPIServiceProtocol,
+        repository: Repository<MovieRealm>?
+    ) {
         self.movieAPIService = movieAPIService
         self.repository = repository
         updateViewData?(.loading)

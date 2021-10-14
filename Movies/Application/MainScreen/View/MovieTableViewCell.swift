@@ -3,8 +3,6 @@
 
 import UIKit
 
-protocol TableViewCellDelegate: AnyObject {}
-
 final class MovieTableViewCell: UITableViewCell {
     // MARK: - Public Properties
 
@@ -77,7 +75,6 @@ final class MovieTableViewCell: UITableViewCell {
         movieRatelabel.text = String(movie.voteAverage)
 
         id = movie.id
-
         loadImage(path: movie.posterPath, imageView: movieImageView)
     }
 
