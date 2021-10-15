@@ -28,10 +28,21 @@ struct MovieDetailPage {
             .matching(predicate).element
     }
 
-    private func item(id: String) -> XCUIElement {
+    func item(id: String) -> XCUIElement {
         let predicate = NSPredicate(format: "identifier == '\(id)'")
         return view.descendants(matching: .cell)
             .matching(predicate).element
+    }
+}
+
+/// WebPage
+struct WebPage {}
+
+extension MovieDetailPage {
+    func openDetailPage(byItemID itemID: String) -> WebPage {
+        let itemElement = item(id: itemID)
+        itemElement.tap()
+        return WebPage()
     }
 }
 
@@ -136,5 +147,11 @@ final class MovieTests: XCTestCase {
         XCTAssert(detailCollectionView.exists)
         detailCollectionView.swipeLeft()
         detailCollectionView.swipeRight()
+
+        let detailTableCell = detailPage.item(id: "DetailTableViewCell")
+        XCTAssert(detailTableCell.exists)
+        detailTableCell.tap()
+
+        sleep(5)
     }
 }
