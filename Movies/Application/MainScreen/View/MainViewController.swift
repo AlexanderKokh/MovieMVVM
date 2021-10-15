@@ -90,6 +90,7 @@ final class MovieViewController: UIViewController {
         let popularButton = configureRequestButton(title: Constants.popularButtonTitle)
         popularButton.tag = 1
         view.addSubview(popularButton)
+        popularButton.accessibilityIdentifier = "popularButton"
         popularButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         popularButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         popularButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
@@ -98,6 +99,7 @@ final class MovieViewController: UIViewController {
 
         let comingSoonButton = configureRequestButton(title: Constants.comingSoonButtonTitle)
         comingSoonButton.tag = 2
+        comingSoonButton.accessibilityIdentifier = "comingSoonButton"
         view.addSubview(comingSoonButton)
         comingSoonButton.trailingAnchor.constraint(equalTo: popularButton.leadingAnchor, constant: -30).isActive = true
         comingSoonButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -107,6 +109,7 @@ final class MovieViewController: UIViewController {
 
         let topRateButton = configureRequestButton(title: Constants.topRateButtonTitle)
         topRateButton.tag = 0
+        topRateButton.accessibilityIdentifier = "topRateButton"
         view.addSubview(topRateButton)
         topRateButton.leadingAnchor.constraint(equalTo: popularButton.trailingAnchor, constant: 30).isActive = true
         topRateButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -126,6 +129,7 @@ final class MovieViewController: UIViewController {
         tableView?.estimatedRowHeight = 200.0
         tableView?.rowHeight = UITableView.automaticDimension
         tableView?.backgroundColor = .black
+        tableView?.accessibilityIdentifier = "MovieView"
         view.addSubview(tableView ?? UITableView())
     }
 

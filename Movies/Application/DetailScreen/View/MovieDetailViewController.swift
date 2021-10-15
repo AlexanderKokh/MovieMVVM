@@ -85,6 +85,7 @@ final class MovieDetailViewController: UIViewController {
         tableview.rowHeight = UITableView.automaticDimension
         tableview.separatorColor = .clear
         tableview.backgroundColor = .black
+        tableview.accessibilityIdentifier = "DetailTableView"
         view.addSubview(tableview)
     }
 

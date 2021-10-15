@@ -54,6 +54,7 @@ final class CastTableViewCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .black
+        collectionView.accessibilityIdentifier = "DetailCollectionView"
         contentView.addSubview(backGroundView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         createConstraints()
