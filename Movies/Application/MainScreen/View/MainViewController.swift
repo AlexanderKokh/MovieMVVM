@@ -191,7 +191,6 @@ extension MovieViewController: UITableViewDelegate {
                 target: nil,
                 action: nil
             )
-
             toDetailScreen?(movieID, data[indexPath.row].title ?? "")
         }
     }

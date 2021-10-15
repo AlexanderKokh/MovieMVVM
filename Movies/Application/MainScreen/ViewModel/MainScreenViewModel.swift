@@ -15,6 +15,10 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
 
     // MARK: - Private Properties
 
+    private enum Constants {
+        static let queryFile = "category"
+    }
+
     private var repository: Repository<MovieRealm>?
     private var movieAPIService: MovieAPIServiceProtocol?
 
@@ -34,7 +38,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     func getData(groupID: Int) {
         let filter = "\(groupID)"
 
-        let requestPredicate = NSPredicate(format: "category == %@", filter)
+        let requestPredicate = NSPredicate(format: "\(Constants.queryFile) == %@", filter)
 
         let casheMovie = repository?.get(predicate: requestPredicate)
 

@@ -20,6 +20,8 @@ struct IncomingJson: Decodable {
 }
 
 @objc final class MovieRealm: Object, Codable {
+    // MARK: - Public Properties
+
     @objc dynamic var backdropPath = String()
     /// Id фильма
     @objc dynamic var id = Int()
@@ -31,10 +33,12 @@ struct IncomingJson: Decodable {
     @objc dynamic var overview = String()
     /// Рейтинг фильма
     @objc dynamic var voteAverage = Float()
-    ///
+    /// Категория фильма  0/1/2
     @objc dynamic var category: String?
-    ///
+    ///  Поле первичного ключа: category + id
     @objc dynamic var keyField: String?
+
+    // MARK: - MovieRealm
 
     override class func primaryKey() -> String? {
         "keyField"

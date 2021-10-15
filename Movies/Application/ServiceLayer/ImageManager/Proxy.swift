@@ -10,8 +10,8 @@ protocol LoadImageProtocol {
 final class Proxy: LoadImageProtocol {
     // MARK: - Private Properties
 
-    private let imageAPIService: ImageAPIServiceProtocol
-    private let fileManagerService: FileManagerServiceProtocol
+    private let imageAPIService: ImageAPIServiceProtocol?
+    private let fileManagerService: FileManagerServiceProtocol?
 
     // MARK: - Initializers
 
@@ -23,16 +23,16 @@ final class Proxy: LoadImageProtocol {
     // MARK: - Public methods
 
     func loadImage(url: URL, compleation: @escaping (Result<UIImage, Error>) -> Void) {
-        let image = fileManagerService.getImageFromCache(url: url.absoluteString)
+        let image = fileManagerService?.getImageFromCache(url: url.absoluteString)
 
         if image == nil {
-            imageAPIService.loadImage(url: url) { result in
+            imageAPIService?.loadImage(url: url) { result in
                 switch result {
                 case let .success(image):
-                    self.fileManagerService.saveImageToCache(url: url.absoluteString, image: image)
+                    self.fileManagerService?.saveImageToCache(url: url.absoluteString, image: image)
                     compleation(.success(image))
                 case let .failure(error):
-                    print(error.localizedDescription)
+                    compleation(.failure(error))
                 }
             }
         } else {

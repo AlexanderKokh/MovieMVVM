@@ -39,7 +39,9 @@ final class MovieDetailViewModel: MovieDetailViewModelProtocol {
         fetchDetailData(filmID: filmID)
     }
 
-    func fetchDetailData(filmID: Int) {
+    // MARK: - Private methods
+
+    private func fetchDetailData(filmID: Int) {
         let requestPredicate = NSPredicate(format: "id = \(filmID)")
 
         let cacheMovie = repository?.get(predicate: requestPredicate)
