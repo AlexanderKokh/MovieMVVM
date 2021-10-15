@@ -17,6 +17,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
 
     private enum Constants {
         static let queryFile = "category"
+        static let baseSaveError = "Не удалось сохранить в БД"
     }
 
     private var repository: Repository<MovieRealm>?
@@ -36,15 +37,12 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: - Public methods
 
     func getData(groupID: Int) {
-        let filter = "\(groupID)"
+        let categorySearchFormat = "\(Constants.queryFile) == %@"
+        let savedMovies = repository?.get(format: categorySearchFormat, filter: String(groupID))
 
-        let requestPredicate = NSPredicate(format: "\(Constants.queryFile) == %@", filter)
-
-        let casheMovie = repository?.get(predicate: requestPredicate)
-
-        if !(casheMovie?.isEmpty ?? true) {
-            guard let casheMovie = casheMovie else { return }
-            updateViewData?(.loaded(casheMovie))
+        if !(savedMovies?.isEmpty ?? true) {
+            guard let savedMovies = savedMovies else { return }
+            updateViewData?(.loaded(savedMovies))
             return
         }
 
@@ -57,7 +55,13 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
                         $0.keyField = "Category:\(groupID) id: \($0.id)"
                     }
                     self?.repository?.save(object: movies)
-                    self?.updateViewData?(.loaded(movies))
+                    guard let savedMovies = self?.repository?
+                        .get(format: categorySearchFormat, filter: String(groupID))
+                    else {
+                        self?.updateViewData?(.failure(description: Constants.baseSaveError))
+                        return
+                    }
+                    self?.updateViewData?(.loaded(savedMovies))
                 }
             case let .failure(.jsonSerializationError(error)):
                 self?.updateViewData?(.failure(description: error.localizedDescription))

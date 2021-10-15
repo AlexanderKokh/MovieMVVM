@@ -22,7 +22,9 @@ final class RealmRepository<RealmEntity: Object>: Repository<RealmEntity> {
         }
     }
 
-    override func get(predicate: NSPredicate) -> [Entity] {
+    override func get(format: String, filter: CVarArg) -> [Entity] {
+        let predicate = getPredicate(format: format, filter: filter)
+
         do {
             let realm = try Realm()
             let realmObjects = realm.objects(Entity.self).filter(predicate)
@@ -34,5 +36,9 @@ final class RealmRepository<RealmEntity: Object>: Repository<RealmEntity> {
         } catch {
             return []
         }
+    }
+
+    private func getPredicate(format: String, filter: CVarArg) -> NSPredicate {
+        NSPredicate(format: format, filter)
     }
 }

@@ -89,7 +89,7 @@ final class DetailMovieTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(movie: MovieDetailRealm) {
+    func configureCell(movie: MovieDetail) {
         loadImage(path: movie.backdropPath, imageView: movieBackGroundImageView)
 
         var moviedescription = "*"

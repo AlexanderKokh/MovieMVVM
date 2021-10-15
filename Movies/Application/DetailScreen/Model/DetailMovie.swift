@@ -4,7 +4,7 @@
 import Foundation
 import RealmSwift
 
-@objc final class MovieDetailRealm: Object, Codable {
+@objc final class MovieDetail: Object, Codable {
     enum CodingKeys: String, CodingKey {
         case backdropPath = "backdrop_path"
         case homepage
@@ -42,11 +42,11 @@ import RealmSwift
     /// id  фильма на сайте imdb.com
     @objc dynamic var imdbID: String?
     /// id  фильма - primaryKey
-    @objc dynamic var id = Int()
+    @objc dynamic var id: Int
 
-    // MARK: - MovieDetailRealm
+    // MARK: - MovieDetail
 
-    override class func primaryKey() -> String? {
+    override class func primaryKey() -> String {
         "id"
     }
 }

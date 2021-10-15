@@ -5,7 +5,7 @@ import Foundation
 
 protocol RepositoryProtocol: AnyObject {
     associatedtype Entity
-    func get(predicate: NSPredicate) -> [Entity]
+    func get(format: String, filter: CVarArg) -> [Entity]
     func save(object: [Entity])
     func removeAll()
 }
@@ -16,7 +16,7 @@ class Repository<DataBaseEntity>: RepositoryProtocol {
 
     // MARK: - Public methods
 
-    func get(predicate: NSPredicate) -> [Entity] {
+    func get(format: String, filter: CVarArg) -> [Entity] {
         fatalError("")
     }
 
