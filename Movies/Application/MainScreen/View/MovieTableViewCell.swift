@@ -69,21 +69,12 @@ final class MovieTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(movie: Movie) {
-        if let description = movie.overview {
-            movieShortDescription.text = description
-        }
-
-        if let title = movie.title {
-            movieTitleLabel.text = title
-        }
-
-        if let rateLabel = movie.voteAverage {
-            movieRatelabel.text = String(rateLabel)
-        }
+    func configureCell(movie: MovieRealm) {
+        movieShortDescription.text = movie.overview
+        movieTitleLabel.text = movie.title
+        movieRatelabel.text = String(movie.voteAverage)
 
         id = movie.id
-
         loadImage(path: movie.posterPath, imageView: movieImageView)
     }
 

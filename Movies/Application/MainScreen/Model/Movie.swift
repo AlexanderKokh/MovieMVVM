@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
 /// UI Data Driven
 enum ViewData<Model> {
@@ -13,23 +14,33 @@ enum ViewData<Model> {
 /// Модель  списка  фильмов
 struct IncomingJson: Decodable {
     /// Массив фильмов с кратким описанием
-    var results: [Movie]
+    var results: [MovieRealm]
     /// Количество страниц с фильмами
     let totalPages, totalResults: Int
 }
 
-/// Модель  Фильма
-struct Movie: Decodable {
-    /// Путь к картинке  подложки старницы фильма
-    var backdropPath: String?
+@objc final class MovieRealm: Object, Codable {
+    // MARK: - Public Properties
+
+    @objc dynamic var backdropPath = String()
     /// Id фильма
-    var id: Int?
+    @objc dynamic var id = Int()
     /// Название фильма
-    var title: String?
+    @objc dynamic var title = String()
     /// Путь к основному постеру фильма
-    var posterPath: String?
+    @objc dynamic var posterPath = String()
     /// Краткое описание
-    var overview: String?
+    @objc dynamic var overview = String()
     /// Рейтинг фильма
-    var voteAverage: Float?
+    @objc dynamic var voteAverage = Float()
+    /// Категория фильма  0/1/2
+    @objc dynamic var category: String?
+    ///  Поле первичного ключа: category + id
+    @objc dynamic var keyField: String?
+
+    // MARK: - MovieRealm
+
+    override class func primaryKey() -> String? {
+        "keyField"
+    }
 }

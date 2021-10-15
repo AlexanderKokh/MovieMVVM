@@ -13,14 +13,22 @@ final class Assembly: AssemblyProtocol {
 
     func createMovieModule() -> UIViewController {
         let movieAPIService = MovieAPIService()
-        let viewModel = MainScreenViewModel(movieAPIService: movieAPIService)
+        let repository = RealmRepository<MovieRealm>()
+        let viewModel = MainScreenViewModel(
+            movieAPIService: movieAPIService,
+            repository: repository
+        )
         let view = MovieViewController(viewModel: viewModel)
         return view
     }
 
     func createMovieDetailModule(movieID: Int) -> UIViewController {
         let movieAPIService = MovieAPIService()
-        let viewModel = MovieDetailViewModel(movieAPIService: movieAPIService)
+        let repository = RealmRepository<MovieDetail>()
+        let viewModel = MovieDetailViewModel(
+            movieAPIService: movieAPIService,
+            repository: repository
+        )
         let view = MovieDetailViewController(viewModel: viewModel, id: movieID)
         return view
     }

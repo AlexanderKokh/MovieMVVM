@@ -96,15 +96,8 @@ final class DetailMovieTableViewCell: UITableViewCell {
         if let movieDate = movie.releaseDate {
             moviedescription += " \(movieDate.prefix(4)) *"
         }
-        if let genres = movie.genres {
-            for element in genres {
-                moviedescription += " \(element.name ?? "")/ "
-            }
-            moviedescription += " *"
-        }
-        if let runtime = movie.runtime {
-            moviedescription += " \(runtime) мин. *"
-        }
+
+        moviedescription += " \(movie.runtime) мин. *"
         movieParametrsLabel.text = moviedescription
 
         if let detaildescription = movie.overview {
