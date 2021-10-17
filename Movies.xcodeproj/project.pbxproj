@@ -35,6 +35,7 @@
 		FC6A0A982718D94A006A8B0A /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A0A972718D94A006A8B0A /* Proxy.swift */; };
 		FC6A0A9C2718DDBF006A8B0A /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A0A9B2718DDBF006A8B0A /* ImageService.swift */; };
 		FC6A0AA52718F777006A8B0A /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A0AA42718F777006A8B0A /* RealmRepository.swift */; };
+		FC829F78271C124A00C800F5 /* MovieDetailViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC829F77271C124A00C800F5 /* MovieDetailViewModelTest.swift */; };
 		FC83695426B447FC003B9018 /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC83695326B447FC003B9018 /* Host.swift */; };
 		FC83695726B4873E003B9018 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC83695626B4873E003B9018 /* WebViewController.swift */; };
 		FCA976F3271477A900E2FB98 /* MainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA976F2271477A900E2FB98 /* MainScreenViewModel.swift */; };
@@ -96,6 +97,7 @@
 		FC6A0A972718D94A006A8B0A /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		FC6A0A9B2718DDBF006A8B0A /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		FC6A0AA42718F777006A8B0A /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		FC829F77271C124A00C800F5 /* MovieDetailViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModelTest.swift; sourceTree = "<group>"; };
 		FC83695326B447FC003B9018 /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
 		FC83695626B4873E003B9018 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FCA976F2271477A900E2FB98 /* MainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewModel.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			children = (
 				FC6288DB27178AA9003E4696 /* MoviesTests.swift */,
 				FCA9BBB5271AFC640073F53F /* MovieViewModelTest.swift */,
+				FC829F77271C124A00C800F5 /* MovieDetailViewModelTest.swift */,
 				FCA9BBB0271AE9F90073F53F /* DataStorageTests.swift */,
 				FC6288DD27178AA9003E4696 /* Info.plist */,
 			);
@@ -541,6 +544,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC829F78271C124A00C800F5 /* MovieDetailViewModelTest.swift in Sources */,
 				FC6288DC27178AA9003E4696 /* MoviesTests.swift in Sources */,
 				FCA9BBB1271AE9F90073F53F /* DataStorageTests.swift in Sources */,
 				FCA9BBB6271AFC640073F53F /* MovieViewModelTest.swift in Sources */,

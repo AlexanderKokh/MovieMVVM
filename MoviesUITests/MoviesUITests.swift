@@ -129,8 +129,6 @@ final class MovieTests: XCTestCase {
         XCTAssert(itemCell.exists)
         XCTAssertNotNil(itemCell.label)
 
-        let titleValue = itemCell.label
-
         let movieTableView = moviePage.view
         XCTAssert(movieTableView.exists)
         movieTableView.swipeUp()

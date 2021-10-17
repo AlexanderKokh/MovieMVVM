@@ -8,12 +8,12 @@ final class MockNetworkService: MovieAPIServiceProtocol {
     var filterDict = [0: "Baz", 1: "Bar"]
 
     var movies: [MovieRealm]?
-    var movieDetail: MovieDetail?
+    var movieDetail: [MovieDetail]?
     var movieCast: [Cast]?
 
     init() {}
 
-    convenience init(movie: MovieDetail) {
+    convenience init(movie: [MovieDetail]) {
         self.init()
         movieDetail = movie
     }
@@ -36,17 +36,24 @@ final class MockNetworkService: MovieAPIServiceProtocol {
             compleation(.success(filteredMovie))
             return
         }
-        compleation(.success([MovieRealm]()))
     }
 
     func fetchDataDetail(filmID: Int, compleation: @escaping (Result<MovieDetail, DownLoaderError>) -> ()) {
         if let movieDetail = movieDetail {
-            compleation(.success(movieDetail))
+            let filteredDetailMovies = movieDetail.filter { $0.id == filmID }
+            guard let filteredDetailMovie = filteredDetailMovies.first else {
+                return
+            }
+            compleation(.success(filteredDetailMovie))
+            return
         }
-        compleation(.success(MovieDetail()))
     }
 
-    func fetchCastData(filmID: Int, compleation: @escaping (Result<[Cast], DownLoaderError>) -> ()) {}
+    func fetchCastData(filmID: Int, compleation: @escaping (Result<[Cast], DownLoaderError>) -> ()) {
+        guard let movieCast = movieCast,
+              filmID == 999 else { return }
+        compleation(.success(movieCast))
+    }
 }
 
 final class MovieViewModelTest: XCTestCase {
