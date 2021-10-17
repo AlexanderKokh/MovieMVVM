@@ -125,6 +125,7 @@ final class MovieTests: XCTestCase {
         XCTAssert(button3.exists)
         button3.tap()
 
+        sleep(1)
         let itemCell = moviePage.itemTitle(itemID: String(580_489))
         XCTAssert(itemCell.exists)
         XCTAssertNotNil(itemCell.label)
