@@ -3,10 +3,6 @@
 
 import UIKit
 
-protocol ImageServiceProtocol {
-    func getImage(url: URL, compleation: @escaping (Result<UIImage, Error>) -> Void)
-}
-
 final class ImageService: ImageServiceProtocol {
     // MARK: - Public methods
 

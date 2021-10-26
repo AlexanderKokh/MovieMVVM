@@ -15,7 +15,7 @@ struct MovieDetailPage {
     }
 
     var collectionView: XCUIElement {
-        let id = "DetailCollectionView"
+        let id = "DetailCollectionViewID"
         let predicate = NSPredicate(format: "identifier == '\(id)'")
         return XCUIApplication().descendants(matching: .collectionView)
             .matching(predicate).element
@@ -144,6 +144,7 @@ final class MovieTests: XCTestCase {
 
         let detailCollectionView = detailPage.collectionView
         XCTAssert(detailCollectionView.exists)
+        sleep(2)
         detailCollectionView.swipeLeft()
         detailCollectionView.swipeRight()
 
