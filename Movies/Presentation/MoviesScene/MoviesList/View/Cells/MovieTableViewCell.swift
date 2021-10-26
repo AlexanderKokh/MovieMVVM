@@ -70,11 +70,16 @@ final class MovieTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configureCell(movie: MovieRealm) {
+        movieTitleLabel.accessibilityIdentifier = "Title"
         movieShortDescription.text = movie.overview
         movieTitleLabel.text = movie.title
         movieRatelabel.text = String(movie.voteAverage)
 
         id = movie.id
+
+        if let id = id {
+            accessibilityIdentifier = String(id)
+        }
         loadImage(path: movie.posterPath, imageView: movieImageView)
     }
 

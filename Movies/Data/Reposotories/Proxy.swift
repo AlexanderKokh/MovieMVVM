@@ -3,10 +3,6 @@
 
 import UIKit
 
-protocol LoadImageProtocol {
-    func loadImage(url: URL, compleation: @escaping (Swift.Result<UIImage, Error>) -> Void)
-}
-
 final class Proxy: LoadImageProtocol {
     // MARK: - Private Properties
 

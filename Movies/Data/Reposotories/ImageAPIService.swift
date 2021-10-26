@@ -11,10 +11,6 @@ enum ImageLoadingError: Error {
     case invalidData
 }
 
-protocol ImageAPIServiceProtocol {
-    func loadImage(url: URL, handler: @escaping HandlerImage)
-}
-
 final class ImageAPIService: ImageAPIServiceProtocol {
     // MARK: - Private Properties
 

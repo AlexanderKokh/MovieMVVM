@@ -112,6 +112,7 @@ final class DetailMovieTableViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     private func setupCell() {
+        accessibilityIdentifier = "DetailTableViewCell"
         contentView.addSubview(movieBackGroundImageView)
         contentView.addSubview(movieParametrsLabel)
         contentView.addSubview(movieDescriptionLabel)
