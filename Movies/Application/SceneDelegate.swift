@@ -13,16 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
+        window.makeKeyAndVisible()
         self.window = window
 
-        let navController = UINavigationController()
-        let vc = ViewController()
+        let assembly = Assembly()
 
-        navController.viewControllers = [vc]
-        navController.navigationBar.isHidden = true
-
-        self.window?.rootViewController = navController
-        self.window?.backgroundColor = .white
-        self.window?.makeKeyAndVisible()
+        let coordinator = ApplicationCoordinator(assembly: assembly)
+        coordinator.start()
     }
 }
